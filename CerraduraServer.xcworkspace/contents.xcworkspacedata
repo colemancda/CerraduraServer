@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CerraduraServerDaemon/CerraduraServerDaemon/../../CoreCerradura/CoreCerradura/CoreCerradura.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:CoreCerraduraServer/CoreCerraduraServer.xcodeproj">
    </FileRef>
    <FileRef
