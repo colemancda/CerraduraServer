@@ -1,0 +1,3 @@
+[submodule "CoreCerradura"]
+	path = CoreCerradura
+	url = git@github.com:colemancda/CoreCerradura.git
