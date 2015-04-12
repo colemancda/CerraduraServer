@@ -20,6 +20,20 @@
 			remoteGlobalIDString = 6E4642A31AD9561A005BDBA7;
 			remoteInfo = CoreCerraduraServer;
 		};
+		6E4643191AD9E104005BDBA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6E4643141AD9E103005BDBA7 /* CoreCerradura.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6E4642EE1AD9E045005BDBA7;
+			remoteInfo = CoreCerradura;
+		};
+		6E46431B1AD9E104005BDBA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6E4643141AD9E103005BDBA7 /* CoreCerradura.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6E4642F91AD9E045005BDBA7;
+			remoteInfo = CoreCerraduraTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +43,7 @@
 		6E4642AF1AD9561A005BDBA7 /* CoreCerraduraServerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreCerraduraServerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E4642B51AD9561A005BDBA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E4642B61AD9561A005BDBA7 /* CoreCerraduraServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCerraduraServerTests.swift; sourceTree = "<group>"; };
+		6E4643141AD9E103005BDBA7 /* CoreCerradura.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoreCerradura.xcodeproj; path = /Users/Coleman/Developer/MyProjects/CerraduraServer/CerraduraServerDaemon/CerraduraServerDaemon/../../CoreCerradura/CoreCerradura/CoreCerradura.xcodeproj; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +68,7 @@
 		6E46429A1AD9561A005BDBA7 = {
 			isa = PBXGroup;
 			children = (
+				6E4643131AD9E0F8005BDBA7 /* Frameworks */,
 				6E4642A61AD9561A005BDBA7 /* CoreCerraduraServer */,
 				6E4642B31AD9561A005BDBA7 /* CoreCerraduraServerTests */,
 				6E4642A51AD9561A005BDBA7 /* Products */,
@@ -100,6 +116,23 @@
 				6E4642B51AD9561A005BDBA7 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6E4643131AD9E0F8005BDBA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E4643141AD9E103005BDBA7 /* CoreCerradura.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6E4643151AD9E103005BDBA7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6E46431A1AD9E104005BDBA7 /* CoreCerradura.framework */,
+				6E46431C1AD9E104005BDBA7 /* CoreCerraduraTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +212,12 @@
 			mainGroup = 6E46429A1AD9561A005BDBA7;
 			productRefGroup = 6E4642A51AD9561A005BDBA7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6E4643151AD9E103005BDBA7 /* Products */;
+					ProjectRef = 6E4643141AD9E103005BDBA7 /* CoreCerradura.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6E4642A31AD9561A005BDBA7 /* CoreCerraduraServer */,
@@ -186,6 +225,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6E46431A1AD9E104005BDBA7 /* CoreCerradura.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CoreCerradura.framework;
+			remoteRef = 6E4643191AD9E104005BDBA7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6E46431C1AD9E104005BDBA7 /* CoreCerraduraTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CoreCerraduraTests.xctest;
+			remoteRef = 6E46431B1AD9E104005BDBA7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6E4642A21AD9561A005BDBA7 /* Resources */ = {
@@ -400,6 +456,7 @@
 				6E4642BC1AD9561A005BDBA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6E4642BD1AD9561A005BDBA7 /* Build configuration list for PBXNativeTarget "CoreCerraduraServerTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +465,7 @@
 				6E4642BF1AD9561A005BDBA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -10,6 +10,8 @@
 	<string>CerraduraServer</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>12F38FB327716B7895CF61666B41920A578D627D</key>
+		<string>github.com:colemancda/CoreCerradura.git</string>
 		<key>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</key>
 		<string>https://github.com/colemancda/CerraduraServer.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>CerraduraServer.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>12F38FB327716B7895CF61666B41920A578D627D</key>
+		<string>../CoreCerradura/</string>
 		<key>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</key>
 		<string>..</string>
 	</dict>
@@ -35,6 +39,14 @@
 			<string>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CerraduraServer</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>12F38FB327716B7895CF61666B41920A578D627D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CoreCerradura</string>
 		</dict>
 	</array>
 </dict>

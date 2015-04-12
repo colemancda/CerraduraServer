@@ -97,8 +97,8 @@
 		6E4642871AD95552005BDBA7 = {
 			isa = PBXGroup;
 			children = (
-				6E4642D81AD96422005BDBA7 /* CerraduraServerDaemonBundle */,
 				6E4642C91AD95632005BDBA7 /* Frameworks */,
+				6E4642D81AD96422005BDBA7 /* CerraduraServerDaemonBundle */,
 				6E4642921AD95552005BDBA7 /* CerraduraServerDaemon */,
 				6E4642911AD95552005BDBA7 /* Products */,
 			);
