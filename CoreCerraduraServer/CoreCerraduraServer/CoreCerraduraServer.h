@@ -14,6 +14,4 @@ FOUNDATION_EXPORT double CoreCerraduraServerVersionNumber;
 //! Project version string for CoreCerraduraServer.
 FOUNDATION_EXPORT const unsigned char CoreCerraduraServerVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCerraduraServer/PublicHeader.h>
-
 
