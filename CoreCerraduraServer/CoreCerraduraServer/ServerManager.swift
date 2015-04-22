@@ -11,8 +11,8 @@ import CoreData
 import NetworkObjects
 import CoreCerradura
 
-/* Manages the incoming connections to the server. */
-public class ServerManager, ServerDelegate {
+/* Manages incoming connections to the server. */
+public class ServerManager: ServerDelegate, ServerDataSource {
     
     
 }

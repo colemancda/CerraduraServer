@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6E0AB6731AE5D58400AAAF50 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0AB6721AE5D58400AAAF50 /* ServerManager.swift */; };
+		6E0EB0761AE6742E004B2DA4 /* LockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EB0751AE6742E004B2DA4 /* LockManager.swift */; };
 		6E4642AA1AD9561A005BDBA7 /* CoreCerraduraServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E4642A91AD9561A005BDBA7 /* CoreCerraduraServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E4642B01AD9561A005BDBA7 /* CoreCerraduraServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4642A41AD9561A005BDBA7 /* CoreCerraduraServer.framework */; };
 		6E4642B71AD9561A005BDBA7 /* CoreCerraduraServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4642B61AD9561A005BDBA7 /* CoreCerraduraServerTests.swift */; };
@@ -158,6 +159,7 @@
 
 /* Begin PBXFileReference section */
 		6E0AB6721AE5D58400AAAF50 /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		6E0EB0751AE6742E004B2DA4 /* LockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockManager.swift; sourceTree = "<group>"; };
 		6E4642A41AD9561A005BDBA7 /* CoreCerraduraServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreCerraduraServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E4642A81AD9561A005BDBA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E4642A91AD9561A005BDBA7 /* CoreCerraduraServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreCerraduraServer.h; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				6E4642A91AD9561A005BDBA7 /* CoreCerraduraServer.h */,
 				6E0AB6721AE5D58400AAAF50 /* ServerManager.swift */,
+				6E0EB0751AE6742E004B2DA4 /* LockManager.swift */,
 				6E4642A71AD9561A005BDBA7 /* Supporting Files */,
 			);
 			path = CoreCerraduraServer;
@@ -593,6 +596,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E0EB0761AE6742E004B2DA4 /* LockManager.swift in Sources */,
 				6E0AB6731AE5D58400AAAF50 /* ServerManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
