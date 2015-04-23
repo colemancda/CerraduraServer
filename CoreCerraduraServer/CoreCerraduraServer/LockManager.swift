@@ -8,9 +8,25 @@
 
 import Foundation
 import CoreData
+import NetworkObjects
+import CoreCerradura
 
 /* Manages the connections to the locks. */
 internal class LockManager {
     
-    let locks: Set<Locks>
+    // MARK: - Properties
+    
+    internal let locks: Set<Lock> = {
+       
+        
+        
+    }()
+    
+    // MARK: - Initialization
+    
+    
+    
+    // MARK: - Functions
+    
+    
 }
