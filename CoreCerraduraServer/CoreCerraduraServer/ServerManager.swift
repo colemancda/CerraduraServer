@@ -12,7 +12,36 @@ import NetworkObjects
 import CoreCerradura
 
 /* Manages incoming connections to the server. */
-public class ServerManager: ServerDelegate, ServerDataSource {
+@objc public class ServerManager: ServerDelegate, ServerDataSource {
     
+    // MARK: - Properties
     
+    public lazy var server: Server = {
+        
+        // create server
+        let server = Server(dataSource: self,
+            delegate: self,
+            managedObjectModel: CoreCerraduraManagedObjectModel(),
+            prettyPrintJSON: true,
+            sslIdentityAndCertificates: nil,
+            permissionsEnabled: true)
+        
+        self.addAuthenticationHandlerToServer(server)
+        
+        return server
+        }()
+    
+    // MARK: - Initialization
+    
+    public class var sharedManager : ServerManager {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0
+            static var instance : ServerManager? = nil
+        }
+        dispatch_once(&Static.onceToken) {
+            Static.instance = ServerManager()
+        }
+        return Static.instance!
+    }
+
 }

@@ -12,12 +12,23 @@ import NetworkObjects
 import CoreCerradura
 
 /* Manages the connections to the locks. */
-internal class LockManager {
+public class LockManager {
     
     // MARK: - Properties
     
-    internal let locks: Set<Lock> = {
+    /* Managed object context for Lock entities. */
+    public lazy var managedObjectContext: NSManagedObjectContext = {
        
+        let context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        
+        context.undoManager = nil
+        
+        
+        
+    }()
+    
+    public var locks: Set<Lock> = {
+        
         
         
     }()
@@ -26,7 +37,14 @@ internal class LockManager {
     
     
     
-    // MARK: - Functions
+    // MARK: - Private Methods
     
+    private func fetchLocks() -> [Lock] {
+        
+        
+    }
     
 }
+
+
+
