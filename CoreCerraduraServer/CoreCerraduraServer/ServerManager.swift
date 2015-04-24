@@ -43,5 +43,16 @@ import CoreCerradura
         }
         return Static.instance!
     }
-
+    
+    // MARK: - Methods
+    
+    
+    
+    // MARK: - ServerDataSource
+    
+    
+    
+    // MARK: - ServerDelegate
+    
+    
 }

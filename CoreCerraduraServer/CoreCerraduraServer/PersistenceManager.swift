@@ -17,7 +17,7 @@ public class PersistenceManager {
     
     public lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.server.managedObjectModel)
+        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: ServerManager.sharedManager.server.managedObjectModel)
         
         var error: NSError?
         

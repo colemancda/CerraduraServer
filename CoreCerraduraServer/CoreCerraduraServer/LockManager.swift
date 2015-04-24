@@ -17,15 +17,7 @@ public class LockManager {
     // MARK: - Properties
     
     /* Managed object context for Lock entities. */
-    public lazy var managedObjectContext: NSManagedObjectContext = {
-       
-        let context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        
-        context.undoManager = nil
-        
-        
-        
-    }()
+    public lazy var managedObjectContext: NSManagedObjectContext = PersistenceManager.sharedManager.newManagedObjectContext()
     
     public var locks: Set<Lock> = {
         
@@ -35,7 +27,16 @@ public class LockManager {
     
     // MARK: - Initialization
     
-    
+    public class var sharedManager : LockManager {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0
+            static var instance : LockManager? = nil
+        }
+        dispatch_once(&Static.onceToken) {
+            Static.instance = LockManager()
+        }
+        return Static.instance!
+    }
     
     // MARK: - Private Methods
     
