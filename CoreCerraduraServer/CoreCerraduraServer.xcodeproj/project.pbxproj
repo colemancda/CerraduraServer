@@ -19,6 +19,9 @@
 		6E4643BF1ADAE3A1005BDBA7 /* ExSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E46439D1ADAE38F005BDBA7 /* ExSwift.framework */; };
 		6E4643C01ADAE3A1005BDBA7 /* NetworkObjects.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4643B21ADAE38F005BDBA7 /* NetworkObjects.framework */; };
 		6E4643C11ADAE3A1005BDBA7 /* RoutingHTTPServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4643B81ADAE38F005BDBA7 /* RoutingHTTPServer.framework */; };
+		6E8D77A11AE9DA2D00370898 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77A01AE9DA2D00370898 /* PersistenceManager.swift */; };
+		6E8D77B31AE9DD8100370898 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77B21AE9DD8100370898 /* File.swift */; };
+		6E8D77C51AE9E05700370898 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77C41AE9E05700370898 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +176,9 @@
 		6E4643831ADAE38F005BDBA7 /* RoutingHTTPServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RoutingHTTPServer.xcodeproj; path = /Users/Coleman/Developer/MyProjects/CerraduraServer/CoreCerradura/NetworkObjects/NetworkObjects/../RoutingHTTPServer/Framework/RoutingHTTPServer/RoutingHTTPServer.xcodeproj; sourceTree = "<absolute>"; };
 		6E4643861ADAE38F005BDBA7 /* ExSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ExSwift.xcodeproj; path = /Users/Coleman/Developer/MyProjects/CerraduraServer/CoreCerradura/NetworkObjects/NetworkObjects/../ExSwift/ExSwift.xcodeproj; sourceTree = "<absolute>"; };
 		6E4643891ADAE38F005BDBA7 /* NetworkObjects.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NetworkObjects.xcodeproj; path = /Users/Coleman/Developer/MyProjects/CerraduraServer/CoreCerradura/CoreCerradura/../NetworkObjects/NetworkObjects/NetworkObjects.xcodeproj; sourceTree = "<absolute>"; };
+		6E8D77A01AE9DA2D00370898 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		6E8D77B21AE9DD8100370898 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		6E8D77C41AE9E05700370898 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +232,9 @@
 				6E4642A91AD9561A005BDBA7 /* CoreCerraduraServer.h */,
 				6E0AB6721AE5D58400AAAF50 /* ServerManager.swift */,
 				6E0EB0751AE6742E004B2DA4 /* LockManager.swift */,
+				6E8D77A01AE9DA2D00370898 /* PersistenceManager.swift */,
+				6E8D77B21AE9DD8100370898 /* File.swift */,
+				6E8D77C41AE9E05700370898 /* Settings.swift */,
 				6E4642A71AD9561A005BDBA7 /* Supporting Files */,
 			);
 			path = CoreCerraduraServer;
@@ -596,8 +605,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E8D77A11AE9DA2D00370898 /* PersistenceManager.swift in Sources */,
+				6E8D77B31AE9DD8100370898 /* File.swift in Sources */,
 				6E0EB0761AE6742E004B2DA4 /* LockManager.swift in Sources */,
 				6E0AB6731AE5D58400AAAF50 /* ServerManager.swift in Sources */,
+				6E8D77C51AE9E05700370898 /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
