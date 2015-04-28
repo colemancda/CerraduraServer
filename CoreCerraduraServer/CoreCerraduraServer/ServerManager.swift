@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 import NetworkObjects
 import CoreCerradura
+import CocoaAsyncSocket
 
 /* Manages incoming connections to the server. */
 @objc public class ServerManager: ServerDelegate, ServerDataSource {
@@ -25,8 +26,6 @@ import CoreCerradura
             prettyPrintJSON: true,
             sslIdentityAndCertificates: nil,
             permissionsEnabled: true)
-        
-        self.addAuthenticationHandlerToServer(server)
         
         return server
         }()

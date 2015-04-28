@@ -10,19 +10,37 @@ import Foundation
 import CoreData
 import NetworkObjects
 import CoreCerradura
+import SNRFetchedResultsController
 
 /* Manages the connections to the locks. */
 public class LockManager {
     
     // MARK: - Properties
     
-    /* Managed object context for Lock entities. */
-    public lazy var managedObjectContext: NSManagedObjectContext = PersistenceManager.sharedManager.newManagedObjectContext()
     
-    public var locks: Set<Lock> = {
+    
+    // MARK: - Private Properties
+    
+    /* Managed object context for Lock entities. */
+    private lazy var managedObjectContext: NSManagedObjectContext = PersistenceManager.sharedManager.newManagedObjectContext()
+    
+    /** Fetched results controller for fetching locks. */
+    private lazy var fetchedResultsController: SNRFetchedResultsController = {
         
+        let fetchRequest = NSFetchRequest(entityName: "Lock")
         
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+       
+        let fetchedResultsController = SNRFetchedResultsController(managedObjectContext: self.managedObjectContext, fetchRequest: fetchRequest)
         
+        let fetchError: NSError?
+        
+        if !fetchedResultsController.performFetch(&fetchError) {
+            
+            NSException(name: NSInternalInconsistencyException, reason: "Could not perform initial fetch for LockManager", userInfo: nil).raise()
+        }
+        
+        return fetchedResultsController
     }()
     
     // MARK: - Initialization
@@ -42,7 +60,12 @@ public class LockManager {
     
     private func fetchLocks() -> [Lock] {
         
-        
+        self.managedObjectContext.performBlockAndWait { () -> Void in
+            
+            
+            
+            
+        }
     }
     
 }
