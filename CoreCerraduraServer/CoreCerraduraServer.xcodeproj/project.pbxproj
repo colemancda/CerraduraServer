@@ -23,7 +23,6 @@
 		6E8D77B31AE9DD8100370898 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77B21AE9DD8100370898 /* File.swift */; };
 		6E8D77C51AE9E05700370898 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77C41AE9E05700370898 /* Settings.swift */; };
 		6EF11EA51AEFD4B100A7C4BC /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */; };
-		6EF11EEE1AF00BE400A7C4BC /* SNRFetchedResultsController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF11EE71AF00AD800A7C4BC /* SNRFetchedResultsController.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,20 +159,6 @@
 			remoteGlobalIDString = 6E4642ED1AD9E045005BDBA7;
 			remoteInfo = CoreCerradura;
 		};
-		6EF11EE61AF00AD800A7C4BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6EF11EE11AF00AD700A7C4BC /* SNRFetchedResultsController.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6EF11EC51AF00AD700A7C4BC;
-			remoteInfo = SNRFetchedResultsController;
-		};
-		6EF11EE81AF00AD800A7C4BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6EF11EE11AF00AD700A7C4BC /* SNRFetchedResultsController.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6EF11ED01AF00AD700A7C4BC;
-			remoteInfo = SNRFetchedResultsControllerTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -196,7 +181,6 @@
 		6E8D77B21AE9DD8100370898 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		6E8D77C41AE9E05700370898 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
-		6EF11EE11AF00AD700A7C4BC /* SNRFetchedResultsController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SNRFetchedResultsController.xcodeproj; path = ../SNRFetchedResultsController/SNRFetchedResultsController/SNRFetchedResultsController.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +188,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EF11EEE1AF00BE400A7C4BC /* SNRFetchedResultsController.framework in Frameworks */,
 				6E4643BE1ADAE3A1005BDBA7 /* CoreCerradura.framework in Frameworks */,
 				6E4643BB1ADAE3A1005BDBA7 /* CocoaAsyncSocket.framework in Frameworks */,
 				6E4643BC1ADAE3A1005BDBA7 /* CocoaHTTPServer.framework in Frameworks */,
@@ -288,7 +271,6 @@
 		6E4643131AD9E0F8005BDBA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6EF11EE11AF00AD700A7C4BC /* SNRFetchedResultsController.xcodeproj */,
 				6E46437A1ADAE38F005BDBA7 /* Lumberjack.xcodeproj */,
 				6E46437D1ADAE38F005BDBA7 /* CocoaAsyncSocket.xcodeproj */,
 				6E4643801ADAE38F005BDBA7 /* CocoaHTTPServer.xcodeproj */,
@@ -362,15 +344,6 @@
 			children = (
 				6E4643B21ADAE38F005BDBA7 /* NetworkObjects.framework */,
 				6E4643B41ADAE38F005BDBA7 /* NetworkObjectsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		6EF11EE21AF00AD700A7C4BC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6EF11EE71AF00AD800A7C4BC /* SNRFetchedResultsController.framework */,
-				6EF11EE91AF00AD800A7C4BC /* SNRFetchedResultsControllerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -481,10 +454,6 @@
 				{
 					ProductGroup = 6E4643841ADAE38F005BDBA7 /* Products */;
 					ProjectRef = 6E4643831ADAE38F005BDBA7 /* RoutingHTTPServer.xcodeproj */;
-				},
-				{
-					ProductGroup = 6EF11EE21AF00AD700A7C4BC /* Products */;
-					ProjectRef = 6EF11EE11AF00AD700A7C4BC /* SNRFetchedResultsController.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -613,20 +582,6 @@
 			fileType = wrapper.cfbundle;
 			path = RoutingHTTPServerTests.xctest;
 			remoteRef = 6E4643B91ADAE38F005BDBA7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		6EF11EE71AF00AD800A7C4BC /* SNRFetchedResultsController.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SNRFetchedResultsController.framework;
-			remoteRef = 6EF11EE61AF00AD800A7C4BC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		6EF11EE91AF00AD800A7C4BC /* SNRFetchedResultsControllerTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SNRFetchedResultsControllerTests.xctest;
-			remoteRef = 6EF11EE81AF00AD800A7C4BC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
