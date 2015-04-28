@@ -12,7 +12,7 @@ import NetworkObjects
 import CoreCerradura
 
 /* Manages the connections to the locks. */
-@objc public class LockManager {
+@objc public class LockManager: LockPersistenceDelegate, LockConnectionDelegate {
     
     // MARK: - Properties
     
@@ -48,7 +48,16 @@ import CoreCerradura
             return fetchLocksError!
         }
         
+        // keep reference to locks
+        
         self.locks = Set(fetchedLocks!)
+        
+        // set initial values
+        
+        for lock in self.locks {
+            
+            if 
+        }
     }
     
     /** Objective-C compatible method for 'func loadLocks() -> NSError' */
@@ -93,6 +102,12 @@ import CoreCerradura
 
 // MARK: - Protocols
 
-public protocol
+public protocol LockPersistenceDelegate {
+    
+    
+}
 
-
+public protocol LockConnectionDelegate {
+    
+    
+}
