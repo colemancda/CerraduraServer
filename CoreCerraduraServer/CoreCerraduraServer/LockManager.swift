@@ -12,15 +12,11 @@ import NetworkObjects
 import CoreCerradura
 
 /* Manages the connections to the locks. */
-public class LockManager {
+@objc public class LockManager {
     
     // MARK: - Properties
     
-    public var locks: Set<Lock> = {
-        
-        
-        
-    }()
+    public var locks = Set<Lock>()
     
     // MARK: - Private Properties
     
@@ -40,25 +36,63 @@ public class LockManager {
         return Static.instance!
     }
     
+    // MARK: - Methods
+    
+    /** Initial setup for loading locks and setting their initial values. You need to call this once for LockManager to properly manage the locks. */
+    public func loadLocks() -> NSError {
+        
+        let (fetchLocksError, fetchedLocks) = self.fetchLocks()
+        
+        if fetchLocksError != nil {
+            
+            return fetchLocksError!
+        }
+        
+        self.locks = Set(fetchedLocks!)
+    }
+    
+    /** Objective-C compatible method for 'func loadLocks() -> NSError' */
+    public func loadLocks(error: NSErrorPointer) -> Bool {
+        
+        error.memory = self.loadLocks()
+        
+        return (error.memory == nil)
+    }
+    
     // MARK: - Private Methods
     
-    private func fetchLocks() -> [Lock] {
+    /** Fetches the locks from the managed object context. */
+    private func fetchLocks() -> (NSError?, [Lock]?) {
         
         let fetchRequest = NSFetchRequest(entityName: "Lock")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
         
-        let fetchError: NSError?
+        var results: [Lock]?
+        
+        var fetchError: NSError?
         
         self.managedObjectContext.performBlockAndWait { () -> Void in
             
-            self.managedObjectContext.executeFetchRequest(fetchRequest, error: &fetchError)
+            results = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &fetchError) as? [Lock]
             
-            
+            return
         }
+        
+        // error
+        if fetchError != nil {
+            
+            return (fetchError, nil)
+        }
+        
+        // set locks array
+        return (nil, results)
     }
     
 }
 
+// MARK: - Protocols
+
+public protocol
 
 
