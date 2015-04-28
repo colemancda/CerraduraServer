@@ -14,6 +14,8 @@
 		<string>github.com:colemancda/CoreCerradura.git</string>
 		<key>1C75F1C5CFCB95B3702F6F632FA05ED5244B519E</key>
 		<string>https://github.com/colemancda/CocoaAsyncSocket.git</string>
+		<key>20AA502919E6DC9D0EC8D6835C7B8CB300C3FD0A</key>
+		<string>https://github.com/colemancda/SNRFetchedResultsController.git</string>
 		<key>35B5C9A93714EC9BEB56BAE809C5551E5C66E52D</key>
 		<string>https://github.com/colemancda/CocoaLumberjack.git</string>
 		<key>71CFC0DE1DEFC877B0C5B9F98B971EBA2921D608</key>
@@ -35,6 +37,8 @@
 		<string>../CoreCerradura</string>
 		<key>1C75F1C5CFCB95B3702F6F632FA05ED5244B519E</key>
 		<string>../CoreCerradura/NetworkObjects/RoutingHTTPServer/External/CocoaHTTPServer/CocoaAsyncSocket</string>
+		<key>20AA502919E6DC9D0EC8D6835C7B8CB300C3FD0A</key>
+		<string>../SNRFetchedResultsController/</string>
 		<key>35B5C9A93714EC9BEB56BAE809C5551E5C66E52D</key>
 		<string>../CoreCerradura/NetworkObjects/RoutingHTTPServer/External/CocoaHTTPServer/CocoaAsyncSocket/CocoaLumberjack</string>
 		<key>71CFC0DE1DEFC877B0C5B9F98B971EBA2921D608</key>
@@ -119,6 +123,14 @@
 			<string>9D8E50737BD1955BFF09EC27A96CDD52A2431CCE</string>
 			<key>IDESourceControlWCCName</key>
 			<string>RoutingHTTPServer</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>20AA502919E6DC9D0EC8D6835C7B8CB300C3FD0A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SNRFetchedResultsController</string>
 		</dict>
 	</array>
 </dict>
