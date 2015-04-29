@@ -30,6 +30,8 @@ import CocoaAsyncSocket
         return server
         }()
     
+    public lazy var lockConnectionDelegate: ServerManagerLockConnectionDelegate = LockManager.sharedManager
+    
     // MARK: - Initialization
     
     public class var sharedManager : ServerManager {
@@ -54,4 +56,12 @@ import CocoaAsyncSocket
     // MARK: - ServerDelegate
     
     
+}
+
+// MARK: - Protocols
+
+/* Delegates how connections with the lock are handled. */
+public protocol ServerManagerLockConnectionDelegate {
+    
+    func serverManager(serverManager: ServerManager, shouldAcceptIncomingLockConnection: ())
 }

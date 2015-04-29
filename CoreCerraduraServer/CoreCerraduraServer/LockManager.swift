@@ -12,7 +12,7 @@ import NetworkObjects
 import CoreCerradura
 
 /* Manages the connections to the locks. */
-@objc public class LockManager: LockPersistenceDelegate, LockConnectionDelegate {
+@objc public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDelegate {
     
     // MARK: - Properties
     
@@ -56,7 +56,7 @@ import CoreCerradura
         
         for lock in self.locks {
             
-            if 
+            if ()
         }
     }
     
@@ -103,11 +103,6 @@ import CoreCerradura
 // MARK: - Protocols
 
 public protocol LockPersistenceDelegate {
-    
-    
-}
-
-public protocol LockConnectionDelegate {
     
     
 }
