@@ -12,28 +12,22 @@ import NetworkObjects
 import CoreCerradura
 
 /* Manages the connections to the locks. */
-@objc public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDelegate {
+public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDelegate {
     
     // MARK: - Properties
     
     public var locks = Set<Lock>()
     
-    // MARK: - Private Properties
-    
     /* Managed object context for Lock entities. */
-    private let managedObjectContext: NSManagedObjectContext = PersistenceManager.sharedManager.newManagedObjectContext()
+    public let managedObjectContext: NSManagedObjectContext
+    
+    // MARK: - Private Properties
     
     // MARK: - Initialization
     
-    public class var sharedManager : LockManager {
-        struct Static {
-            static var onceToken : dispatch_once_t = 0
-            static var instance : LockManager? = nil
-        }
-        dispatch_once(&Static.onceToken) {
-            Static.instance = LockManager()
-        }
-        return Static.instance!
+    public init(managedObjectContext: NSManagedObjectContext) {
+        
+        self.managedObjectContext = managedObjectContext
     }
     
     // MARK: - Methods
@@ -56,7 +50,7 @@ import CoreCerradura
         
         for lock in self.locks {
             
-            if ()
+            if 
         }
     }
     

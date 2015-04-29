@@ -44,20 +44,6 @@ public class PersistenceManager {
         return operationQueue
         }()
     
-    
-    // MARK: - Initialization
-    
-    public class var sharedManager : PersistenceManager {
-        struct Static {
-            static var onceToken : dispatch_once_t = 0
-            static var instance : PersistenceManager? = nil
-        }
-        dispatch_once(&Static.onceToken) {
-            Static.instance = PersistenceManager()
-        }
-        return Static.instance!
-    }
-    
     // MARK: - Methods
     
     public func newManagedObjectContext() -> NSManagedObjectContext {
