@@ -23,6 +23,7 @@
 		6E8D77B31AE9DD8100370898 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77B21AE9DD8100370898 /* File.swift */; };
 		6E8D77C51AE9E05700370898 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77C41AE9E05700370898 /* Settings.swift */; };
 		6EF11EA51AEFD4B100A7C4BC /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */; };
+		6EF11F091AF280AE00A7C4BC /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF11F081AF280AE00A7C4BC /* Server.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +182,7 @@
 		6E8D77B21AE9DD8100370898 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		6E8D77C41AE9E05700370898 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		6EF11F081AF280AE00A7C4BC /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +240,7 @@
 				6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */,
 				6E8D77B21AE9DD8100370898 /* File.swift */,
 				6E8D77C41AE9E05700370898 /* Settings.swift */,
+				6EF11F081AF280AE00A7C4BC /* Server.swift */,
 				6E4642A71AD9561A005BDBA7 /* Supporting Files */,
 			);
 			path = CoreCerraduraServer;
@@ -608,6 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EF11F091AF280AE00A7C4BC /* Server.swift in Sources */,
 				6E8D77A11AE9DA2D00370898 /* PersistenceManager.swift in Sources */,
 				6E8D77B31AE9DD8100370898 /* File.swift in Sources */,
 				6E0EB0761AE6742E004B2DA4 /* LockManager.swift in Sources */,
@@ -738,6 +742,7 @@
 				INFOPLIST_FILE = CoreCerraduraServer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

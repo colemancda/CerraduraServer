@@ -15,9 +15,11 @@ public class PersistenceManager {
     
     // MARK: - Properties
     
+    public let managedObjectModel: NSManagedObjectModel
+    
     public lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: ServerManager.sharedManager.server.managedObjectModel)
+        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
         var error: NSError?
         
@@ -43,6 +45,13 @@ public class PersistenceManager {
         
         return operationQueue
         }()
+    
+    // MARK: - Initialization
+    
+    public init(managedObjectModel: NSManagedObjectModel) {
+        
+        self.managedObjectModel = managedObjectModel
+    }
     
     // MARK: - Methods
     

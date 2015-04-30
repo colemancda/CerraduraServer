@@ -10,30 +10,46 @@ import Foundation
 import CoreData
 import NetworkObjects
 import CoreCerradura
+import CocoaHTTPServer
 
 /* Manages the connections to the locks. */
-public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDelegate {
+public class LockManager {
     
     // MARK: - Properties
     
     public var locks = Set<Lock>()
+    
+    public var lockConnections = [Lock: WebSocket]()
     
     /* Managed object context for Lock entities. */
     public let managedObjectContext: NSManagedObjectContext
     
     // MARK: - Private Properties
     
+    private let lockOperationQueue: NSOperationQueue = {
+        
+        let operationQueue = NSOperationQueue()
+        
+        operationQueue.name = "LockManager Operation Queue"
+        
+        operationQueue.maxConcurrentOperationCount = 1
+        
+        return operationQueue
+    }()
+    
     // MARK: - Initialization
     
     public init(managedObjectContext: NSManagedObjectContext) {
         
         self.managedObjectContext = managedObjectContext
+        
+        self.managedObjectContext.name = "LockManager Managed Object Context"
     }
     
     // MARK: - Methods
     
     /** Initial setup for loading locks and setting their initial values. You need to call this once for LockManager to properly manage the locks. */
-    public func loadLocks() -> NSError {
+    public func loadLocks() -> NSError? {
         
         let (fetchLocksError, fetchedLocks) = self.fetchLocks()
         
@@ -50,16 +66,26 @@ public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDe
         
         for lock in self.locks {
             
-            if 
+            // TODO: detect connection with lock
+            
+            lock.online = false
         }
+        
+        return nil
     }
     
-    /** Objective-C compatible method for 'func loadLocks() -> NSError' */
-    public func loadLocks(error: NSErrorPointer) -> Bool {
+    /** Unlocks a lock if possible. Does not check for permissions, only whether the lock is connected to the server. Lock must belong to the manager's managed object context. */
+    public func unlock(lock: Lock) -> Bool {
         
-        error.memory = self.loadLocks()
+        let connection = self.lockConnections[lock]
         
-        return (error.memory == nil)
+        if connection == nil {
+            
+            return false
+        }
+        
+        
+        
     }
     
     // MARK: - Private Methods
@@ -70,6 +96,8 @@ public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDe
         let fetchRequest = NSFetchRequest(entityName: "Lock")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        
+        fetchRequest.predicate = NSPredicate(format: "archived == NO", argumentArray: nil);
         
         var results: [Lock]?
         
@@ -91,12 +119,5 @@ public class LockManager: LockPersistenceDelegate, ServerManagerLockConnectionDe
         // set locks array
         return (nil, results)
     }
-    
-}
-
-// MARK: - Protocols
-
-public protocol LockPersistenceDelegate {
-    
     
 }

@@ -11,6 +11,7 @@ import CoreData
 import NetworkObjects
 import CoreCerradura
 import CocoaAsyncSocket
+import ExSwift
 
 /* Manages incoming connections to the server. */
 @objc public class ServerManager: ServerDataSource, ServerDelegate {
@@ -19,11 +20,19 @@ import CocoaAsyncSocket
     
     public lazy var server: Server = {
         
+        let prettyPrintJSON: Bool
+        
+        #if DEBUG
+            prettyPrintJSON = true
+        #else
+            prettyPrintJSON = false
+        #endif
+        
         // create server
         let server = Server(dataSource: self,
             delegate: self,
             managedObjectModel: CoreCerraduraManagedObjectModel(),
-            prettyPrintJSON: true,
+            prettyPrintJSON: prettyPrintJSON,
             sslIdentityAndCertificates: nil,
             permissionsEnabled: true)
         
@@ -32,15 +41,21 @@ import CocoaAsyncSocket
     
     public lazy var lockManager: LockManager = {
         
-        let lockManager = LockManager()
+        let manager = LockManager(managedObjectContext: self.persistenceManager.newManagedObjectContext())
         
-        return lockManager
-    }
+        let error = manager.loadLocks()
+        
+        if error != nil {
+            
+            NSException(name: NSInternalInconsistencyException, reason: "Could not load locks for LockManager. (\(error!.localizedDescription))", userInfo: nil).raise()
+        }
+        
+        return manager
+    }()
     
-    public lazy var persistenceManager: PersistenceManager = {
-        
-        
-    }
+    public lazy var persistenceManager: PersistenceManager = PersistenceManager(managedObjectModel: self.server.managedObjectModel)
+    
+    public lazy var authenticationManager: AuthenticationManager = AuthenticationManager()
     
     // MARK: - Initialization
     
@@ -77,18 +92,71 @@ import CocoaAsyncSocket
         
         let entityClass: AnyClass! = NSClassFromString(entity.managedObjectClassName)
         
-        let functionNames = [String]()
+        var functionNames = [String]()
         
-        if entityClass is Archiveable {
+        // archiveable function
+        
+        if entityClass is Archivable {
             
-            
+            functionNames += [ArchiveFunctionName]
         }
+        
+        // lock
+        
+        if entity.name == "Lock" {
+            
+            functionNames += [UnlockFunctionName]
+        }
+        
+        return functionNames
     }
     
-    public func server(server: Server, performFunction functionName:String, forManagedObject managedObject: NSManagedObject,
+    public func server(server: Server, performFunction functionName: String, forManagedObject managedObject: NSManagedObject,
         context: NSManagedObjectContext, recievedJsonObject: [String: AnyObject]?, request: ServerRequest) -> (ServerFunctionCode, [String: AnyObject]?) {
             
+            switch functionName {
+                
+            case ArchiveFunctionName:
+                
+                // archive object
+                
+                let archivable = managedObject as! Archivable
+                
+                Archive(archivable)
+                
+                // save changes
+                
+                var error: NSError?
+                
+                context.performBlockAndWait({ () -> Void in
+                    
+                    context.save(&error)
+                })
+                
+                if error != nil {
+                    
+                    return (.InternalErrorPerformingFunction, nil)
+                }
+                
+                return (.PerformedSuccesfully, nil)
+                
+            case UnlockFunctionName:
+                
+                // unlock lock
+                
+                let lock = managedObject as! Lock
+                
+                self.lockManager.unlock(lock)
+                
+                
+                
+            default:
+                
+                break
+            }
             
+            // this should never be called
+            return (.InternalErrorPerformingFunction, nil)
     }
     
     // MARK: - ServerDelegate
@@ -100,12 +168,12 @@ import CocoaAsyncSocket
     
     public func server(server: Server, statusCodeForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext) -> ServerStatusCode {
         
-        
+        return ServerStatusCode.OK
     }
     
     public func server(server: Server, permissionForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext, key: String?) -> ServerPermission {
         
-        
+        return ServerPermission.EditPermission
     }
     
     public func server(server: Server, didInsertManagedObject managedObject: NSManagedObject, context: NSManagedObjectContext) {
@@ -117,12 +185,4 @@ import CocoaAsyncSocket
         
         
     }
-}
-
-// MARK: - Protocols
-
-/* Delegates how connections with the lock are handled. */
-public protocol ServerManagerLockConnectionDelegate {
-    
-    func serverManager(serverManager: ServerManager, shouldAcceptIncomingLockConnection: ())
 }
