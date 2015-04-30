@@ -11,14 +11,15 @@ import CoreData
 import NetworkObjects
 import CoreCerradura
 import CocoaAsyncSocket
+import CocoaHTTPServer
 import ExSwift
 
 /* Manages incoming connections to the server. */
-@objc public class ServerManager: ServerDataSource, ServerDelegate {
+@objc public class ServerManager: ServerDataSource, ServerDelegate, ServerLockConnectionDelegate {
     
     // MARK: - Properties
     
-    public lazy var server: Server = {
+    public lazy var server: NetworkObjects.Server = {
         
         let prettyPrintJSON: Bool
         
@@ -29,12 +30,16 @@ import ExSwift
         #endif
         
         // create server
-        let server = Server(dataSource: self,
+        let server = NetworkObjects.Server(dataSource: self,
             delegate: self,
             managedObjectModel: CoreCerraduraManagedObjectModel(),
+            searchPath: "search",
+            resourceIDAttributeName: "id",
             prettyPrintJSON: prettyPrintJSON,
             sslIdentityAndCertificates: nil,
             permissionsEnabled: true)
+        
+        
         
         return server
         }()
@@ -182,6 +187,13 @@ import ExSwift
     }
     
     public func server(server: Server, didPerformRequest request: ServerRequest, withResponse response: ServerResponse, userInfo: [ServerUserInfoKey: AnyObject]) {
+        
+        
+    }
+    
+    // MARK: - ServerLockConnectionDelegate
+    
+    public func server(server: Server, newLockConnection websocket: WebSocket) {
         
         
     }
