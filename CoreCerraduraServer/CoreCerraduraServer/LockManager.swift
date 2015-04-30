@@ -86,6 +86,7 @@ public class LockManager {
         
         
         
+        return true
     }
     
     // MARK: - Private Methods

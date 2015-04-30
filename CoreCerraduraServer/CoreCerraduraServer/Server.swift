@@ -10,12 +10,20 @@ import Foundation
 import NetworkObjects
 import CocoaHTTPServer
 
-public class Server: NetworkObjects.Server {
+public class CerraduraServer: NetworkObjects.Server {
     
     /** Delegates the WebSocket connections with the locks. */
-    let lockConnectionDelegate: ServerLockConnectionDelegate
+    public let lockConnectionDelegate: ServerLockConnectionDelegate
     
-    init(dataSource: ServerDataSource, delegate: ServerDelegate?, managedObjectModel: NSManagedObjectModel, searchPath: String?, resourceIDAttributeName: String, prettyPrintJSON: Bool, sslIdentityAndCertificates: [AnyObject]?, permissionsEnabled: Bool, lockConnectionDelegate: ServerLockConnectionDelegate) {
+    public init(dataSource: ServerDataSource,
+        delegate: ServerDelegate? = nil,
+        managedObjectModel: NSManagedObjectModel,
+        searchPath: String? = "search",
+        resourceIDAttributeName: String = "id",
+        prettyPrintJSON: Bool = false,
+        sslIdentityAndCertificates: [AnyObject]? = nil,
+        permissionsEnabled: Bool = false,
+        lockConnectionDelegate: ServerLockConnectionDelegate) {
         
         self.lockConnectionDelegate = lockConnectionDelegate
         
@@ -37,7 +45,7 @@ public class ServerHTTPConnection: NetworkObjects.ServerHTTPConnection {
             
             let httpServer = cocoaHTTPServer as! ServerHTTPServer
             
-            let server = httpServer.server as! Server
+            let server = httpServer.server as! CerraduraServer
             
             server.lockConnectionDelegate.server(server, newLockConnection: webSocket)
             

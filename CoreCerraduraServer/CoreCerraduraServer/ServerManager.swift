@@ -19,7 +19,7 @@ import ExSwift
     
     // MARK: - Properties
     
-    public lazy var server: NetworkObjects.Server = {
+    public lazy var server: CerraduraServer = {
         
         let prettyPrintJSON: Bool
         
@@ -30,16 +30,15 @@ import ExSwift
         #endif
         
         // create server
-        let server = NetworkObjects.Server(dataSource: self,
+        let server = CerraduraServer(dataSource: self,
             delegate: self,
             managedObjectModel: CoreCerraduraManagedObjectModel(),
             searchPath: "search",
             resourceIDAttributeName: "id",
-            prettyPrintJSON: prettyPrintJSON,
+            prettyPrintJSON: true,
             sslIdentityAndCertificates: nil,
-            permissionsEnabled: true)
-        
-        
+            permissionsEnabled: true,
+            lockConnectionDelegate: self)
         
         return server
         }()
