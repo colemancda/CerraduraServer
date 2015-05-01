@@ -49,7 +49,7 @@ final public class LockManager: WebSocketDelegate {
     
     // MARK: - Methods
     
-    /** Initial setup for loading locks and setting their initial values. You need to call this once for LockManager to properly manage the locks. */
+    /** Initial setup for loading locks and setting their initial values. You need to call this once for LockManager to properly manage the locks. Thread-safe. */
     public func loadLocks() -> NSError? {
         
         let (fetchLocksError, fetchedLocks) = self.fetchLocks()
@@ -59,38 +59,49 @@ final public class LockManager: WebSocketDelegate {
             return fetchLocksError!
         }
         
-        // keep reference to locks
-        
-        self.locks = Set(fetchedLocks!)
-        
-        // set initial values
-        
-        for lock in self.locks {
+        self.lockOperationQueue.addOperations([NSBlockOperation(block: { () -> Void in
             
-            var online = false
+            // keep reference to locks
             
-            // detect connection with lock
+            self.locks = Set(fetchedLocks!)
             
-            self.
+            // set initial values
             
-            let connection = self.lockConnections[lock]
+            for lock in self.locks {
+                
+                var online = false
+                
+                // detect connection with lock
+                
+                let connection = self.lockConnections[lock]
+                
+                
+                
+                lock.online = false
+            }
             
-            lock.online = false
-        }
+        })], waitUntilFinished: true)
         
         return nil
     }
     
     /** Unlocks a lock if possible. Does not check for permissions, only whether the lock is connected to the server. Lock must belong to the manager's managed object context. */
-    public func attemptUnlock(lock: Lock) {
+    public func attemptUnlock(lock: Lock) -> Bool {
         
-        let connection = self.lockConnections[lock]
+        let connection: WebSocket? = {
+            
+            var connection: WebSocket?
+            
+            self.lockOperationQueue.addOperations([NSBlockOperation(block: { () -> Void in
+                
+                connection = self.lockConnections[lock]
+                
+            })], waitUntilFinished: true)
+        }()
         
         if connection == nil {
             
-            //
-            
-            return
+            return false
         }
         
         let unlockMessage = LockCommand.Unlock.rawValue
