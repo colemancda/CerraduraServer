@@ -13,19 +13,16 @@ import CoreCerradura
 import CocoaHTTPServer
 
 /* Manages the connections to the locks. */
-public class LockManager: WebSocketDelegate {
+final public class LockManager: WebSocketDelegate {
     
     // MARK: - Properties
-    
-    public var locks = Set<Lock>()
-    
-    public var lockConnections = [Lock: WebSocket]()
     
     /* Managed object context for Lock entities. */
     public let managedObjectContext: NSManagedObjectContext
     
     // MARK: - Private Properties
     
+    /** Operation queue for accessing variables in a thread safe manner. */
     private let lockOperationQueue: NSOperationQueue = {
         
         let operationQueue = NSOperationQueue()
@@ -36,6 +33,10 @@ public class LockManager: WebSocketDelegate {
         
         return operationQueue
     }()
+    
+    private var locks = Set<Lock>()
+    
+    private var lockConnections = [Lock: WebSocket]()
     
     // MARK: - Initialization
     
@@ -66,7 +67,13 @@ public class LockManager: WebSocketDelegate {
         
         for lock in self.locks {
             
-            // TODO: detect connection with lock
+            var online = false
+            
+            // detect connection with lock
+            
+            self.
+            
+            let connection = self.lockConnections[lock]
             
             lock.online = false
         }
@@ -87,6 +94,8 @@ public class LockManager: WebSocketDelegate {
         }
         
         let unlockMessage = LockCommand.Unlock.rawValue
+        
+        //
         
         connection!.sendMessage(unlockMessage)
     }

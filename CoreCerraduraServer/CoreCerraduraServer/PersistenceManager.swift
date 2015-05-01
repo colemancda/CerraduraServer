@@ -65,6 +65,8 @@ public class PersistenceManager {
         // setup persistent store coordinatormanagedObjectContext
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
         
+        managedObjectContext.name = "CoreCerraduraServer Managed Object Context"
+        
         return managedObjectContext
     }
     
