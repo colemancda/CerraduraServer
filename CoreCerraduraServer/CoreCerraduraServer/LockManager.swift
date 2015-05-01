@@ -84,7 +84,9 @@ public class LockManager {
             return false
         }
         
+        let unlockMessage = "unlock"
         
+        connection!.sendMessage(unlockMessage)
         
         return true
     }
@@ -122,3 +124,13 @@ public class LockManager {
     }
     
 }
+
+// MARK: - Enumerations
+
+public enum LockCommand: String {
+    
+    case Unlock = "unlock"
+}
+
+
+
