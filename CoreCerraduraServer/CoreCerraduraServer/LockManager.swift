@@ -13,7 +13,7 @@ import CoreCerradura
 import CocoaHTTPServer
 
 /* Manages the connections to the locks. */
-public class LockManager {
+public class LockManager: WebSocketDelegate {
     
     // MARK: - Properties
     
@@ -75,20 +75,27 @@ public class LockManager {
     }
     
     /** Unlocks a lock if possible. Does not check for permissions, only whether the lock is connected to the server. Lock must belong to the manager's managed object context. */
-    public func unlock(lock: Lock) -> Bool {
+    public func attemptUnlock(lock: Lock) {
         
         let connection = self.lockConnections[lock]
         
         if connection == nil {
             
-            return false
+            //
+            
+            return
         }
         
-        let unlockMessage = "unlock"
+        let unlockMessage = LockCommand.Unlock.rawValue
         
         connection!.sendMessage(unlockMessage)
+    }
+    
+    /* Adds a new WebSocket to the manager. Tries to find a lock associated with the incoming connection and validate identity. */
+    public func addLockConnection(webSocket: WebSocket) {
         
-        return true
+        // set delegate to self, we'll validate identity once the websocket opens
+        webSocket.delegate = self
     }
     
     // MARK: - Private Methods
@@ -123,14 +130,45 @@ public class LockManager {
         return (nil, results)
     }
     
+    // MARK: - WebSocketDelegate
+    
+    public func webSocketDidOpen(ws: WebSocket!) {
+        
+        // validate identity
+        
+        
+        
+        // set the lock's online property to true
+        
+        
+    }
+    
+    public func webSocket(ws: WebSocket!, didReceiveMessage msg: String!) {
+        
+        
+    }
+    
+    public func webSocketDidClose(ws: WebSocket!) {
+        
+        // remove from lock connections
+        
+    }
+    
 }
 
 // MARK: - Enumerations
 
+/** Commands issued from the server to the lock. */
 public enum LockCommand: String {
     
     case Unlock = "unlock"
 }
 
+/** Responses from the lock, to the server after a LockCommand request. */
+public enum LockResponse: String {
+    
+    case Success = "success"
+    case Failure = "failure"
+}
 
 

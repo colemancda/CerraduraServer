@@ -194,6 +194,6 @@ import ExSwift
     
     public func server(server: Server, newLockConnection websocket: WebSocket) {
         
-        
+        self.lockManager.processNewLockConnection(websocket)
     }
 }
