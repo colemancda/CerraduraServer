@@ -38,6 +38,8 @@ final public class LockManager: WebSocketDelegate {
     
     private var lockConnections = [Lock: WebSocket]()
     
+    private var pendingResponses = [WebSocket: dispatch_semaphore_t]()
+    
     // MARK: - Initialization
     
     public init(managedObjectContext: NSManagedObjectContext) {
@@ -59,6 +61,8 @@ final public class LockManager: WebSocketDelegate {
             return fetchLocksError!
         }
         
+        var saveError: NSError?
+        
         self.lockOperationQueue.addOperations([NSBlockOperation(block: { () -> Void in
             
             // keep reference to locks
@@ -69,20 +73,30 @@ final public class LockManager: WebSocketDelegate {
             
             for lock in self.locks {
                 
-                var online = false
+                let online: Bool
                 
                 // detect connection with lock
                 
-                let connection = self.lockConnections[lock]
-                
-                
-                
-                lock.online = false
+                if let connection = self.lockConnections[lock] {
+                    
+                    lock.online = true
+                }
+                else {
+                    
+                    lock.online = false
+                }
             }
+            
+            // save locks to managed object context
+            
+            self.managedObjectContext.performBlockAndWait({ () -> Void in
+                
+                self.managedObjectContext.save(&saveError)
+            })
             
         })], waitUntilFinished: true)
         
-        return nil
+        return saveError
     }
     
     /** Unlocks a lock if possible. Does not check for permissions, only whether the lock is connected to the server. Lock must belong to the manager's managed object context. */
@@ -97,6 +111,8 @@ final public class LockManager: WebSocketDelegate {
                 connection = self.lockConnections[lock]
                 
             })], waitUntilFinished: true)
+            
+            return connection
         }()
         
         if connection == nil {
@@ -106,9 +122,15 @@ final public class LockManager: WebSocketDelegate {
         
         let unlockMessage = LockCommand.Unlock.rawValue
         
-        //
-        
         connection!.sendMessage(unlockMessage)
+        
+        // wait for response
+        
+        let semaphore = dispatch_semaphore_create(0)
+        
+        let didTimeout = Bool(dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(LockResponseTimeout))))
+        
+        // remove created semaphore
     }
     
     /* Adds a new WebSocket to the manager. Tries to find a lock associated with the incoming connection and validate identity. */
@@ -160,10 +182,7 @@ final public class LockManager: WebSocketDelegate {
         
         // set the lock's online property to true
         
-        
-    }
-    
-    public func webSocket(ws: WebSocket!, didReceiveMessage msg: String!) {
+        // add to lock connections
         
         
     }
@@ -172,8 +191,17 @@ final public class LockManager: WebSocketDelegate {
         
         // remove from lock connections
         
+        
+        
+        // set online to false
+        
+        
     }
     
+    public func webSocket(ws: WebSocket!, didReceiveMessage msg: String!) {
+        
+        
+    }
 }
 
 // MARK: - Enumerations
@@ -190,5 +218,9 @@ public enum LockResponse: String {
     case Success = "success"
     case Failure = "failure"
 }
+
+// MARK: - Constants
+
+public let LockResponseTimeout = LoadSetting(Setting.LockResponseTimeout) as UInt
 
 
