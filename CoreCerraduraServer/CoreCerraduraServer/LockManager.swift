@@ -38,8 +38,6 @@ final public class LockManager: WebSocketDelegate {
     
     private var lockConnections = [Lock: WebSocket]()
     
-    private var pendingResponses = [WebSocket: dispatch_semaphore_t]()
-    
     // MARK: - Initialization
     
     public init(managedObjectContext: NSManagedObjectContext) {
@@ -100,7 +98,7 @@ final public class LockManager: WebSocketDelegate {
     }
     
     /** Unlocks a lock if possible. Does not check for permissions, only whether the lock is connected to the server. Lock must belong to the manager's managed object context. */
-    public func attemptUnlock(lock: Lock) -> Bool {
+    public func unlock(lock: Lock) -> Bool {
         
         let connection: WebSocket? = {
             
@@ -124,13 +122,7 @@ final public class LockManager: WebSocketDelegate {
         
         connection!.sendMessage(unlockMessage)
         
-        // wait for response
-        
-        let semaphore = dispatch_semaphore_create(0)
-        
-        let didTimeout = Bool(dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(LockResponseTimeout))))
-        
-        // remove created semaphore
+        return true
     }
     
     /* Adds a new WebSocket to the manager. Tries to find a lock associated with the incoming connection and validate identity. */
@@ -182,9 +174,11 @@ final public class LockManager: WebSocketDelegate {
         
         // set the lock's online property to true
         
+        
+        
         // add to lock connections
         
-        
+         
     }
     
     public func webSocketDidClose(ws: WebSocket!) {
@@ -212,15 +206,8 @@ public enum LockCommand: String {
     case Unlock = "unlock"
 }
 
-/** Responses from the lock, to the server after a LockCommand request. */
-public enum LockResponse: String {
-    
-    case Success = "success"
-    case Failure = "failure"
-}
-
 // MARK: - Constants
 
-public let LockResponseTimeout = LoadSetting(Setting.LockResponseTimeout) as UInt
+public let LockResponseTimeout = LoadSetting(Setting.LockResponseTimeout) as! UInt
 
 
