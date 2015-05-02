@@ -11,7 +11,7 @@ import CoreData
 
 
 /* Manages persistence of object graph. */
-public class PersistenceManager {
+public final class PersistenceManager {
     
     // MARK: - Properties
     

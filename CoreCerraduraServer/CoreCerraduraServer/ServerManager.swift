@@ -15,11 +15,11 @@ import CocoaHTTPServer
 import ExSwift
 
 /* Manages incoming connections to the server. */
-@objc public class ServerManager: ServerDataSource, ServerDelegate, ServerLockConnectionDelegate {
+@objc final public class ServerManager: ServerDataSource, ServerDelegate {
     
     // MARK: - Properties
     
-    public lazy var server: CerraduraServer = {
+    public lazy var server: Server = {
         
         let prettyPrintJSON: Bool
         
@@ -30,15 +30,14 @@ import ExSwift
         #endif
         
         // create server
-        let server = CerraduraServer(dataSource: self,
+        let server = Server(dataSource: self,
             delegate: self,
             managedObjectModel: CoreCerraduraManagedObjectModel(),
             searchPath: "search",
             resourceIDAttributeName: "id",
             prettyPrintJSON: true,
             sslIdentityAndCertificates: nil,
-            permissionsEnabled: true,
-            lockConnectionDelegate: self)
+            permissionsEnabled: true)
         
         return server
         }()
@@ -188,12 +187,5 @@ import ExSwift
     public func server(server: Server, didPerformRequest request: ServerRequest, withResponse response: ServerResponse, userInfo: [ServerUserInfoKey: AnyObject]) {
         
         
-    }
-    
-    // MARK: - ServerLockConnectionDelegate
-    
-    public func server(server: Server, newLockConnection websocket: WebSocket) {
-        
-        self.lockManager.processNewLockConnection(websocket)
     }
 }

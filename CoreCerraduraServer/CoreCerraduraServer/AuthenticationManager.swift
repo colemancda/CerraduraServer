@@ -9,7 +9,7 @@
 import Foundation
 
 /** Handles the authentication for the NetworkObjects API consumers. */
-public class AuthenticationManager {
+public final class AuthenticationManager {
     
     
 }
