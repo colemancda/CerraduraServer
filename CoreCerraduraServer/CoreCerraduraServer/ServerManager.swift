@@ -42,20 +42,6 @@ import ExSwift
         return server
         }()
     
-    public lazy var lockManager: LockManager = {
-        
-        let manager = LockManager(managedObjectContext: self.persistenceManager.newManagedObjectContext())
-        
-        let error = manager.loadLocks()
-        
-        if error != nil {
-            
-            NSException(name: NSInternalInconsistencyException, reason: "Could not load locks for LockManager. (\(error!.localizedDescription))", userInfo: nil).raise()
-        }
-        
-        return manager
-    }()
-    
     public lazy var persistenceManager: PersistenceManager = PersistenceManager(managedObjectModel: self.server.managedObjectModel)
     
     public lazy var authenticationManager: AuthenticationManager = AuthenticationManager()
@@ -125,13 +111,13 @@ import ExSwift
                 
                 let archivable = managedObject as! Archivable
                 
-                Archive(archivable)
-                
                 // save changes
                 
                 var error: NSError?
                 
                 context.performBlockAndWait({ () -> Void in
+                    
+                    Archive(archivable)
                     
                     context.save(&error)
                 })
@@ -149,9 +135,27 @@ import ExSwift
                 
                 let lock = managedObject as! Lock
                 
-                self.lockManager.unlock(lock)
+                // create new pending command
                 
+                var saveError: NSError?
                 
+                context.performBlockAndWait({ () -> Void in
+                    
+                    let lockCommand = NSEntityDescription.insertNewObjectForEntityForName("LockCommand", inManagedObjectContext: context) as! LockCommand
+                    
+                    lockCommand.command = LockCommandType.Unlock.rawValue
+                    
+                    lockCommand.lock = lock
+                    
+                    context.save(&saveError)
+                })
+                
+                if saveError != nil {
+                    
+                    return (.InternalErrorPerformingFunction, nil)
+                }
+                
+                return (.PerformedSuccesfully, nil)
                 
             default:
                 
