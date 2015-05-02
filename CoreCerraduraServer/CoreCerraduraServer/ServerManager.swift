@@ -12,6 +12,7 @@ import NetworkObjects
 import CoreCerradura
 import CocoaAsyncSocket
 import CocoaHTTPServer
+import RoutingHTTPServer
 import ExSwift
 
 /* Manages incoming connections to the server. */
@@ -39,6 +40,8 @@ import ExSwift
             sslIdentityAndCertificates: nil,
             permissionsEnabled: true)
         
+        self.addLockHandler(server)
+        
         return server
         }()
     
@@ -61,7 +64,16 @@ import ExSwift
     
     // MARK: - Methods
     
+    // MARK: - Private Methods
     
+    private func addLockHandler(server: Server) {
+        
+        server.httpServer.get("/lock", withBlock: { (request: RouteRequest!, response: RouteResponse!) -> Void in
+            
+            
+            
+        })
+    }
     
     // MARK: - ServerDataSource
     
