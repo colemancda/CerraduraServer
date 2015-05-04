@@ -26,6 +26,8 @@
 		<string>https://github.com/colemancda/CerraduraServer.git</string>
 		<key>E2F476CE895D3596DBE8080E8F363F8F94823E70</key>
 		<string>https://github.com/colemancda/ExSwift.git</string>
+		<key>F5203A135CBC59107F981B12C20EBB5794D3BC69</key>
+		<string>https://github.com/colemancda/Crypto.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>CerraduraServer.xcworkspace</string>
@@ -47,6 +49,8 @@
 		<string>..</string>
 		<key>E2F476CE895D3596DBE8080E8F363F8F94823E70</key>
 		<string>../CoreCerradura/NetworkObjects/ExSwift</string>
+		<key>F5203A135CBC59107F981B12C20EBB5794D3BC69</key>
+		<string>../CoreCerradura/Crypto/</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/colemancda/CerraduraServer.git</string>
@@ -95,6 +99,14 @@
 			<string>12F38FB327716B7895CF61666B41920A578D627D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CoreCerradura</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F5203A135CBC59107F981B12C20EBB5794D3BC69</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Crypto</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
