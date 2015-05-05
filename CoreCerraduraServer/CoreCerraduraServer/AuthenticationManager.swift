@@ -11,5 +11,7 @@ import Foundation
 /** Handles the authentication for the NetworkObjects API consumers. */
 public final class AuthenticationManager {
     
-    
 }
+
+// TODO: Make more secure
+let ServerPrivateKey = "privateKey1234"

@@ -24,6 +24,10 @@
 		<string>https://github.com/colemancda/NetworkObjects.git</string>
 		<key>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</key>
 		<string>https://github.com/colemancda/CerraduraServer.git</string>
+		<key>CA0F008EE3879A49D4AD08C803AC26CAC131963A</key>
+		<string>https://github.com/colemancda/IDZSwiftCommonCrypto.git</string>
+		<key>D9420E81D6A438210B7B3BBEADC7A0283866D9A2</key>
+		<string>https://github.com/colemancda/CommonCrypto.git</string>
 		<key>E2F476CE895D3596DBE8080E8F363F8F94823E70</key>
 		<string>https://github.com/colemancda/ExSwift.git</string>
 		<key>F5203A135CBC59107F981B12C20EBB5794D3BC69</key>
@@ -47,6 +51,10 @@
 		<string>../CoreCerradura/NetworkObjects</string>
 		<key>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</key>
 		<string>..</string>
+		<key>CA0F008EE3879A49D4AD08C803AC26CAC131963A</key>
+		<string>../CoreCerradura/IDZSwiftCommonCrypto</string>
+		<key>D9420E81D6A438210B7B3BBEADC7A0283866D9A2</key>
+		<string>../CoreCerradura/IDZSwiftCommonCrypto/CommonCrypto/</string>
 		<key>E2F476CE895D3596DBE8080E8F363F8F94823E70</key>
 		<string>../CoreCerradura/NetworkObjects/ExSwift</string>
 		<key>F5203A135CBC59107F981B12C20EBB5794D3BC69</key>
@@ -96,6 +104,14 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D9420E81D6A438210B7B3BBEADC7A0283866D9A2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CommonCrypto</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>12F38FB327716B7895CF61666B41920A578D627D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CoreCerradura</string>
@@ -115,6 +131,14 @@
 			<string>E2F476CE895D3596DBE8080E8F363F8F94823E70</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ExSwift</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CA0F008EE3879A49D4AD08C803AC26CAC131963A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>IDZSwiftCommonCrypto</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
