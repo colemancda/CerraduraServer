@@ -42,8 +42,6 @@ import ExSwift
         
         self.addLockHandler(server)
         
-        self.addLoginHandler(server)
-        
         return server
         }()
     
@@ -71,65 +69,6 @@ import ExSwift
     private func addLockHandler(server: Server) {
         
         server.httpServer.get("/lock", withBlock: { (request: RouteRequest!, response: RouteResponse!) -> Void in
-            
-            
-            
-        })
-    }
-    
-    private func addLoginHandler(server: Server) {
-        
-        server.httpServer.post("/login", withBlock: { (request: RouteRequest!, response: RouteResponse!) -> Void in
-            
-            // get JSON object
-            
-            let authenticationObject = NSJSONSerialization.JSONObjectWithData(request.body(), options: .allZeros, error: nil) as? [String: String]
-            
-            if authenticationObject?.count != 1 || authenticationObject == nil {
-                
-                response.statusCode = ServerStatusCode.BadRequest.rawValue
-                
-                return
-            }
-            
-            let username = authenticationObject!.keys.first!
-            
-            let password = authenticationObject!.values.first!
-            
-            let context = self.persistenceManager.newManagedObjectContext()
-            
-            // fetch user 
-            
-            var user: User?
-            
-            var fetchError: NSError?
-            
-            context.performBlockAndWait({ () -> Void in
-                
-                let fetchRequest = NSFetchRequest(entityName: "User")
-                
-                fetchRequest.predicate = NSPredicate(format: "username == %@ && password == %@", argumentArray: [username, password])
-                
-                fetchRequest.fetchLimit = 1
-                
-                let result = context.executeFetchRequest(fetchRequest, error: &fetchError)
-                
-                user = result?.first as? User
-            })
-            
-            if fetchError != nil {
-                
-                response.statusCode = ServerStatusCode.InternalServerError.rawValue
-                
-                return
-            }
-            
-            if user == nil {
-                
-                response.statusCode = ServerStatusCode.BadRequest.rawValue
-                
-                return
-            }
             
             
             
@@ -252,6 +191,14 @@ import ExSwift
     }
     
     public func server(server: Server, permissionForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext, key: String?) -> ServerPermission {
+        
+        // get authenticated user... 
+        
+        let user: User? = {
+            
+            
+            
+        }()
         
         return ServerPermission.EditPermission
     }
