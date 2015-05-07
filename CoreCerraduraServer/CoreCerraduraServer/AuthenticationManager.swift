@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import CoreCerradura
+import ExSwift
 
 /** Handles the authentication for the NetworkObjects API consumers. */
 public final class AuthenticationManager {
@@ -16,7 +17,7 @@ public final class AuthenticationManager {
     // MARK: - Properties
     
     /** The amount of time (in seconds) the recieved authorization headers are valid. */
-    public let authorizationHeaderTimeout: UInt = 90
+    public let authorizationHeaderTimeout: NSTimeInterval = 90
     
     // MARK: - Private Properties
     
@@ -32,7 +33,7 @@ public final class AuthenticationManager {
     // MARK: - Methods
     
     /** Verifies the authorization header as valid and derives the authenticated entity. */
-    public func verifyAuthorizationHeader<T: NSManagedObject>(authorizationHeader: String, dateHeader: String, contentMD5Header: String, managedObjectContext: NSManagedObjectContext) -> T? {
+    public func verifyAuthorizationHeader<T: NSManagedObject>(authorizationHeader: String, dateHeader: String, managedObjectContext: NSManagedObjectContext) -> T? {
         
         // get identifier...
         
@@ -49,7 +50,7 @@ public final class AuthenticationManager {
         
         let signedKey = headerJSONObject!.values.first!
         
-        // get date and content MD5
+        // get date
         
         let date = self.httpDateFormatter.dateFromString(dateHeader)
         
@@ -58,6 +59,47 @@ public final class AuthenticationManager {
             return nil
         }
         
+        // date cannot be newer than current date
+        
+        if date! > NSDate() {
+            
+            return nil
+        }
+        
+        // token expired
+        
+        if NSDate(timeInterval: self.authorizationHeaderTimeout, sinceDate: date!) < NSDate()  {
+            
+            return nil
+        }
+        
+        // get user
+        
+        let user: User? = {
+           
+            var user: User?
+            
+            let fetchRequest = NSFetchRequest(entityName: "User")
+            
+            fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: "username"),
+                rightExpression: NSExpression(forConstantValue: identifer),
+                modifier: NSComparisonPredicateModifier.DirectPredicateModifier,
+                type: NSPredicateOperatorType.EqualToPredicateOperatorType,
+                options: NSComparisonPredicateOptions.CaseInsensitivePredicateOption)
+            
+            var error: NSError?
+            
+            var result: [User]?
+            
+            managedObjectContext.performBlockAndWait({ () -> Void in
+                
+                result = managedObjectContext.executeFetchRequest(fetchRequest, error: error) as? [User]
+                
+            })
+            
+            
+            
+        }()
         
         
     }

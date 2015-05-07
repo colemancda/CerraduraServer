@@ -16,6 +16,7 @@ public enum Setting: String {
     case SessionTokenLength = "SessionTokenLength"
     case SessionExpiryTimeInterval = "SessionExpiryTimeInterval"
     case AnyUserAddLocks = "AnyUserAddLocks"
+    case AuthorizationHeaderTimeout = "AuthorizationHeaderTimeout"
 }
 
 // MARK: - Functions
