@@ -54,11 +54,11 @@
 		<key>CA0F008EE3879A49D4AD08C803AC26CAC131963A</key>
 		<string>../CoreCerradura/IDZSwiftCommonCrypto</string>
 		<key>D9420E81D6A438210B7B3BBEADC7A0283866D9A2</key>
-		<string>../CoreCerradura/IDZSwiftCommonCrypto/CommonCrypto/</string>
+		<string>../CoreCerradura/IDZSwiftCommonCrypto/CommonCrypto</string>
 		<key>E2F476CE895D3596DBE8080E8F363F8F94823E70</key>
 		<string>../CoreCerradura/NetworkObjects/ExSwift</string>
 		<key>F5203A135CBC59107F981B12C20EBB5794D3BC69</key>
-		<string>../CoreCerradura/Crypto/</string>
+		<string>../CoreCerradura/Crypto</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/colemancda/CerraduraServer.git</string>

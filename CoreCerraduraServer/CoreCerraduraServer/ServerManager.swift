@@ -180,36 +180,74 @@ import ExSwift
     
     // MARK: - ServerDelegate
     
-    public func server(server: Server, didEncounterInternalError error: NSError, forRequest request: ServerRequest, userInfo: [ServerUserInfoKey: AnyObject]) {
+    public func server(server: Server, statusCodeForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext, inout userInfo: [String: AnyObject]) -> ServerStatusCode {
         
-        println("Internal server error: \(error)")
-    }
-    
-    public func server(server: Server, statusCodeForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext) -> ServerStatusCode {
+        // handle authentication...
+        
+        let httpRequest = request.underlyingRequest as! RouteRequest
+        
+        let authenticatedUser: User?
+        
+        if let authorizationHeader = httpRequest.header("Authorization") {
+            
+            let dateHeader = httpRequest.header("Date")
+            
+            if dateHeader == nil {
+                
+                return ServerStatusCode.Unauthorized
+            }
+            
+            let authenticationContext = AuthenticationContext(verb: httpRequest.method(), path: httpRequest.url().path!, dateString: dateHeader)
+            
+            // get authenticated user...
+            
+            authenticatedUser = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext, managedObjectContext: context) as? User
+            
+            if authenticatedUser == nil {
+                
+                return ServerStatusCode.Unauthorized
+            }
+            
+            // set authenticated user in user info
+            userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] = authenticatedUser!
+        }
         
         return ServerStatusCode.OK
     }
     
-    public func server(server: Server, permissionForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext, key: String?) -> ServerPermission {
+    public func server(server: Server, permissionForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext, key: String?, inout userInfo: [String: AnyObject]) -> ServerPermission {
         
-        // get authenticated user... 
+        // try to get authenticated user
         
-        let user: User? = {
-            
-            
-            
-        }()
+        let user = userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] as? User
         
-        return ServerPermission.EditPermission
+        
+        
+        
+        return ServerPermission.NoAccess
     }
     
-    public func server(server: Server, didInsertManagedObject managedObject: NSManagedObject, context: NSManagedObjectContext) {
+    public func server(server: Server, didInsertManagedObject managedObject: NSManagedObject, context: NSManagedObjectContext, inout userInfo: [String: AnyObject]) {
         
         
     }
     
-    public func server(server: Server, didPerformRequest request: ServerRequest, withResponse response: ServerResponse, userInfo: [ServerUserInfoKey: AnyObject]) {
+    public func server(server: Server, didPerformRequest request: ServerRequest, withResponse response: ServerResponse, userInfo: [String: AnyObject]) {
         
         
     }
+    
+    public func server(server: Server, didEncounterInternalError error: NSError, forRequest request: ServerRequest, userInfo: [String: AnyObject]) {
+        
+        println("Internal server error: \(error)")
+    }
+}
+
+
+// MARK: - Enumerations
+
+public enum ServerUserInfoKey: String {
+    
+    /** Key for getting the authenticated user. */
+    case AuthenticatedUser = "AuthenticatedUser"
 }

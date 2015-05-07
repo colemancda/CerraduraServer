@@ -32,12 +32,19 @@ public final class AuthenticationManager {
     
     // MARK: - Methods
     
-    /** Verifies the authorization header as valid and derives the authenticated entity. */
-    public func verifyAuthorizationHeader<T: NSManagedObject>(authorizationHeader: String, dateHeader: String, managedObjectContext: NSManagedObjectContext) -> T? {
+    /// Verifies the authorization header as valid and derives the authenticated entity.
+    ///
+    /// :param: authorizationHeader The token used for authorization.
+    /// :param: identifierKey The key of the identifier for the authenticating entity.
+    /// :param: secretKey The key of the secret for the authenticating entity.
+    /// :param: entityName Name of the entity authenticating.
+    /// :param: authenticationContext The context of the authentication.
+    /// :param: managedObjectContext The managed object context used to fetch the authenticating entity.
+    public func authenticateWithHeader(header: String, identifierKey: String, secretKey: String, entityName: String, authenticationContext: AuthenticationContext, managedObjectContext: NSManagedObjectContext) -> NSManagedObject? {
         
         // get identifier...
         
-        let headerData = (authorizationHeader as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+        let headerData = (header as NSString).dataUsingEncoding(NSUTF8StringEncoding)
         
         let headerJSONObject = NSJSONSerialization.JSONObjectWithData(headerData!, options: NSJSONReadingOptions.allZeros, error: nil) as? [String: String]
         
@@ -46,13 +53,13 @@ public final class AuthenticationManager {
             return nil
         }
         
-        let identifer = headerJSONObject!.keys.first!
+        let identifier = headerJSONObject!.keys.first!
         
-        let signedKey = headerJSONObject!.values.first!
+        let signature = headerJSONObject!.values.first!
         
         // get date
         
-        let date = self.httpDateFormatter.dateFromString(dateHeader)
+        let date = self.httpDateFormatter.dateFromString(authenticationContext.dateString)
         
         if date == nil {
             
@@ -75,33 +82,63 @@ public final class AuthenticationManager {
         
         // get user
         
-        let user: User? = {
-           
-            var user: User?
+        let authenticatingEntity: NSManagedObject? = {
             
-            let fetchRequest = NSFetchRequest(entityName: "User")
+            let fetchRequest = NSFetchRequest(entityName: entityName)
             
-            fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: "username"),
-                rightExpression: NSExpression(forConstantValue: identifer),
+            fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: identifierKey),
+                rightExpression: NSExpression(forConstantValue: identifier),
                 modifier: NSComparisonPredicateModifier.DirectPredicateModifier,
                 type: NSPredicateOperatorType.EqualToPredicateOperatorType,
                 options: NSComparisonPredicateOptions.CaseInsensitivePredicateOption)
             
+            fetchRequest.fetchLimit = 1
+            
             var error: NSError?
             
-            var result: [User]?
+            var result: [NSManagedObject]?
             
             managedObjectContext.performBlockAndWait({ () -> Void in
                 
-                result = managedObjectContext.executeFetchRequest(fetchRequest, error: error) as? [User]
+                result = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [NSManagedObject]
                 
+                return
             })
             
+            if error != nil {
+                
+                return nil
+            }
             
-            
+            return result!.first
         }()
         
+        if authenticatingEntity == nil {
+            
+            return nil
+        }
         
+        let secret: String = {
+            
+            var secret: String!
+            
+            managedObjectContext.performBlockAndWait({ () -> Void in
+                
+                secret = authenticatingEntity!.valueForKey(secretKey) as! String
+            })
+            
+            return secret
+        }()
+        
+        // create signature...
+        
+        let serverSignature = GenerateAuthenticationToken(identifier, secret, authenticationContext)
+        
+        if serverSignature != signature {
+            
+            return nil
+        }
+        
+        return authenticatingEntity!
     }
-    
 }
