@@ -15,8 +15,7 @@ extension LockCommand: AccessControl {
     
     static func permissionForRequest(request: ServerRequest, authenticatedUser: User?, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission {
         
-        return ServerPermission.EditPermission
+        return ServerPermission.ReadOnly
     }
-    
     
 }
