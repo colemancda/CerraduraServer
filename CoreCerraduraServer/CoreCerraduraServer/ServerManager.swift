@@ -221,10 +221,13 @@ import ExSwift
         
         let user = userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] as? User
         
+        // get requested entity
         
+        let managedObjectClass = NSClassFromString(request.entity.managedObjectClassName) as! AccessControl.Type
         
+        let permissionFunction = managedObjectClass.permissionForRequest
         
-        return ServerPermission.NoAccess
+        return managedObjectClass.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
     }
     
     public func server(server: Server, didInsertManagedObject managedObject: NSManagedObject, context: NSManagedObjectContext, inout userInfo: [String: AnyObject]) {

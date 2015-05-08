@@ -13,11 +13,11 @@ import CoreCerradura
 
 extension User: AccessControl {
     
-    class func userCanCreate(
-    
-    class func permissionForRequest(request: ServerRequest, authenticatedUser: User, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission {
+    public static func permissionForRequest(request: ServerRequest, authenticatedUser: User?, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission {
         
-        return ServerPermission.NoAccess
+        if 
+        
+        return ServerPermission.EditPermission
     }
     
     
