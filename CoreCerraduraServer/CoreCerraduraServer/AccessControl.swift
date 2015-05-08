@@ -14,6 +14,12 @@ import CoreCerradura
 /** Defines the access control for an entity. */
 public protocol AccessControl: class {
     
-    /** Asks the reciever for access control. */
-    static func permissionForRequest(request: ServerRequest, authenticatedUser: User?, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission
+    /** Permission for POST requests. */
+    static func canCreate(request: ServerRequest, authenticatedUser: User?) -> Bool
+    
+    /** Permission for attr for GET / PUT / POST requests. */
+    func permissionForRequest(request: ServerRequest, authenticatedUser: User?, key: String?, context: NSManagedObjectContext) -> ServerPermission
+    
+    /** Permission for DELETE requests. */
+    func canDelete(request: ServerRequest, authenticatedUser: User?, context: NSManagedObjectContext?) -> Bool
 }
