@@ -12,14 +12,27 @@ import NetworkObjects
 import CoreCerradura
 
 /** Defines the access control for an entity. */
-public protocol AccessControl: class {
+internal protocol AccessControl: class {
     
-    /** Permission for POST requests. */
-    static func canCreate(request: ServerRequest, authenticatedUser: User?) -> Bool
+    /** Asks the reciever for access control. */
+    static func permissionForRequest(request: ServerRequest, authenticatedUser: User?, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission
+}
+
+/** Workaround for Swift not implementing class function or properties in protocols. */
+internal func PermissionForRequest(request: ServerRequest, user: User?, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission {
     
-    /** Permission for attr for GET / PUT / POST requests. */
-    func permissionForRequest(request: ServerRequest, authenticatedUser: User?, key: String?, context: NSManagedObjectContext) -> ServerPermission
-    
-    /** Permission for DELETE requests. */
-    func canDelete(request: ServerRequest, authenticatedUser: User?, context: NSManagedObjectContext?) -> Bool
+    switch request.entity.name! {
+        
+        case "User": return User.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
+        
+        case "Lock": return User.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
+        
+        case "Permission": return User.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
+        
+        case "LockCommand": return User.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
+        
+        case "Action": return User.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
+        
+    default: return ServerPermission.NoAccess
+    }
 }

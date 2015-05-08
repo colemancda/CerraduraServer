@@ -217,22 +217,21 @@ import ExSwift
     
     public func server(server: Server, permissionForRequest request: ServerRequest, managedObject: NSManagedObject?, context: NSManagedObjectContext, key: String?, inout userInfo: [String: AnyObject]) -> ServerPermission {
         
-        // try to get authenticated user
-        
         let user = userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] as? User
         
-        // get requested entity
-        
-        let managedObjectClass = NSClassFromString(request.entity.managedObjectClassName) as! AccessControl.Type
-        
-        let permissionFunction = managedObjectClass.permissionForRequest
-        
-        return managedObjectClass.permissionForRequest(request, authenticatedUser: user, managedObject: managedObject, key: key, context: context)
+        return PermissionForRequest(request, user, managedObject, key, context)
     }
     
     public func server(server: Server, didInsertManagedObject managedObject: NSManagedObject, context: NSManagedObjectContext, inout userInfo: [String: AnyObject]) {
         
+        let user = userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] as? User
         
+        if let initialValuesManagedObject = managedObject as? InitialValues {
+            
+            initialValuesManagedObject.wasCreated(user, context: context)
+            
+            // no need to save
+        }
     }
     
     public func server(server: Server, didPerformRequest request: ServerRequest, withResponse response: ServerResponse, userInfo: [String: AnyObject]) {

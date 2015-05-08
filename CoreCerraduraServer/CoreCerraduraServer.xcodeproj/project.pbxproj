@@ -23,6 +23,12 @@
 		6E8D77C51AE9E05700370898 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D77C41AE9E05700370898 /* Settings.swift */; };
 		6EDA15BE1AFBE0EB00C74B51 /* AccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA15BD1AFBE0EB00C74B51 /* AccessControl.swift */; };
 		6EDA15C11AFBE68A00C74B51 /* UserAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA15C01AFBE68A00C74B51 /* UserAccessControl.swift */; };
+		6EDA15FD1AFD0E0700C74B51 /* LockAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA15FC1AFD0E0700C74B51 /* LockAccessControl.swift */; };
+		6EDA160F1AFD14B800C74B51 /* LockCommandAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA160E1AFD14B800C74B51 /* LockCommandAccessControl.swift */; };
+		6EDA16111AFD14D900C74B51 /* ActionAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA16101AFD14D900C74B51 /* ActionAccessControl.swift */; };
+		6EDA16131AFD14F200C74B51 /* PermissionAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA16121AFD14F200C74B51 /* PermissionAccessControl.swift */; };
+		6EDA16151AFD171800C74B51 /* InitialValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA16141AFD171800C74B51 /* InitialValues.swift */; };
+		6EDA16181AFD1B2D00C74B51 /* LockInitialValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA16171AFD1B2D00C74B51 /* LockInitialValues.swift */; };
 		6EF11EA51AEFD4B100A7C4BC /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -182,6 +188,12 @@
 		6E8D77C41AE9E05700370898 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		6EDA15BD1AFBE0EB00C74B51 /* AccessControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessControl.swift; sourceTree = "<group>"; };
 		6EDA15C01AFBE68A00C74B51 /* UserAccessControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccessControl.swift; sourceTree = "<group>"; };
+		6EDA15FC1AFD0E0700C74B51 /* LockAccessControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockAccessControl.swift; sourceTree = "<group>"; };
+		6EDA160E1AFD14B800C74B51 /* LockCommandAccessControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockCommandAccessControl.swift; sourceTree = "<group>"; };
+		6EDA16101AFD14D900C74B51 /* ActionAccessControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionAccessControl.swift; sourceTree = "<group>"; };
+		6EDA16121AFD14F200C74B51 /* PermissionAccessControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionAccessControl.swift; sourceTree = "<group>"; };
+		6EDA16141AFD171800C74B51 /* InitialValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialValues.swift; sourceTree = "<group>"; };
+		6EDA16171AFD1B2D00C74B51 /* LockInitialValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockInitialValues.swift; sourceTree = "<group>"; };
 		6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -239,7 +251,7 @@
 				6EF11EA41AEFD4B100A7C4BC /* AuthenticationManager.swift */,
 				6E8D77B21AE9DD8100370898 /* File.swift */,
 				6E8D77C41AE9E05700370898 /* Settings.swift */,
-				6EDA15BD1AFBE0EB00C74B51 /* AccessControl.swift */,
+				6EDA16161AFD184C00C74B51 /* InitialValues */,
 				6EDA15BF1AFBE63E00C74B51 /* Access Control */,
 				6E4642A71AD9561A005BDBA7 /* Supporting Files */,
 			);
@@ -354,9 +366,23 @@
 		6EDA15BF1AFBE63E00C74B51 /* Access Control */ = {
 			isa = PBXGroup;
 			children = (
+				6EDA15BD1AFBE0EB00C74B51 /* AccessControl.swift */,
 				6EDA15C01AFBE68A00C74B51 /* UserAccessControl.swift */,
+				6EDA15FC1AFD0E0700C74B51 /* LockAccessControl.swift */,
+				6EDA160E1AFD14B800C74B51 /* LockCommandAccessControl.swift */,
+				6EDA16101AFD14D900C74B51 /* ActionAccessControl.swift */,
+				6EDA16121AFD14F200C74B51 /* PermissionAccessControl.swift */,
 			);
 			name = "Access Control";
+			sourceTree = "<group>";
+		};
+		6EDA16161AFD184C00C74B51 /* InitialValues */ = {
+			isa = PBXGroup;
+			children = (
+				6EDA16141AFD171800C74B51 /* InitialValues.swift */,
+				6EDA16171AFD1B2D00C74B51 /* LockInitialValues.swift */,
+			);
+			name = InitialValues;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -625,7 +651,13 @@
 				6E0AB6731AE5D58400AAAF50 /* ServerManager.swift in Sources */,
 				6EDA15BE1AFBE0EB00C74B51 /* AccessControl.swift in Sources */,
 				6EDA15C11AFBE68A00C74B51 /* UserAccessControl.swift in Sources */,
+				6EDA15FD1AFD0E0700C74B51 /* LockAccessControl.swift in Sources */,
+				6EDA160F1AFD14B800C74B51 /* LockCommandAccessControl.swift in Sources */,
+				6EDA16181AFD1B2D00C74B51 /* LockInitialValues.swift in Sources */,
+				6EDA16151AFD171800C74B51 /* InitialValues.swift in Sources */,
 				6E8D77C51AE9E05700370898 /* Settings.swift in Sources */,
+				6EDA16131AFD14F200C74B51 /* PermissionAccessControl.swift in Sources */,
+				6EDA16111AFD14D900C74B51 /* ActionAccessControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
