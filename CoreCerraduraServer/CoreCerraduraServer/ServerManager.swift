@@ -49,6 +49,8 @@ import ExSwift
     
     public lazy var authenticationManager: AuthenticationManager = AuthenticationManager()
     
+    public let serverPort: UInt = LoadSetting(Setting.ServerPort) as? UInt ?? 8080
+    
     // MARK: - Initialization
     
     public class var sharedManager : ServerManager {
@@ -60,6 +62,27 @@ import ExSwift
             Static.instance = ServerManager()
         }
         return Static.instance!
+    }
+    
+    // MARK: - Actions
+    
+    /** Starts broadcasting the server. */
+    @objc public func start() -> NSError? {
+        
+        // make sure we have the app support folder
+        // self.createApplicationSupportFolderIfNotPresent()
+        
+        // setup for empty server
+        // self.addAdminUserIfEmpty()
+        
+        // start HTTP server
+        return self.server.start(onPort: self.serverPort);
+    }
+    
+    /** Stops broadcasting the server. */
+    @objc public func stop() {
+        
+        self.server.stop();
     }
     
     // MARK: - Methods

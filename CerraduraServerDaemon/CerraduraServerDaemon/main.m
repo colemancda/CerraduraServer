@@ -7,11 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+@import CoreCerraduraServer;
 
 int main(int argc, const char * argv[]) {
+    
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+
+        NSLog(@"Starting Cerradura Server Daemon...");
+        
+        NSError *error = [[ServerManager sharedManager] start];
+        
+        if (error != nil) {
+            
+            NSLog(@"Could not start server on port %lu (%@)", [ServerManager sharedManager].serverPort, error.localizedDescription);
+            
+            return 1;
+        }
+        
+        NSLog(@"Started server on port %lu", [ServerManager sharedManager].serverPort);
     }
+    
+    [[NSRunLoop currentRunLoop] run];
+    
     return 0;
 }

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 /* Manages persistence of object graph. */
 public final class PersistenceManager {
     
