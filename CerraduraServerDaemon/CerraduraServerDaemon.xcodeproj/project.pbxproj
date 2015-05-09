@@ -211,7 +211,7 @@
 /* Begin PBXFileReference section */
 		6E4642901AD95552005BDBA7 /* CerraduraServerDaemon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CerraduraServerDaemon; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E4642931AD95552005BDBA7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6E4642D71AD96422005BDBA7 /* CerraduraServerDaemonBundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CerraduraServerDaemonBundle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E4642D71AD96422005BDBA7 /* CerraduraServerDaemon.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CerraduraServerDaemon.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E4642DA1AD96422005BDBA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E4643C41ADAE3DC005BDBA7 /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = /Users/Coleman/Developer/MyProjects/CerraduraServer/CoreCerradura/NetworkObjects/RoutingHTTPServer/External/CocoaHTTPServer/CocoaAsyncSocket/Framework/CocoaAsyncSocket/../../CocoaLumberjack/Framework/Desktop/Lumberjack.xcodeproj; sourceTree = "<absolute>"; };
 		6E4643C71ADAE3DC005BDBA7 /* CocoaAsyncSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CocoaAsyncSocket.xcodeproj; path = /Users/Coleman/Developer/MyProjects/CerraduraServer/CoreCerradura/NetworkObjects/RoutingHTTPServer/External/CocoaHTTPServer/Framework/CocoaHTTPServer/../../CocoaAsyncSocket/Framework/CocoaAsyncSocket/CocoaAsyncSocket.xcodeproj; sourceTree = "<absolute>"; };
@@ -255,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				6E4642901AD95552005BDBA7 /* CerraduraServerDaemon */,
-				6E4642D71AD96422005BDBA7 /* CerraduraServerDaemonBundle.bundle */,
+				6E4642D71AD96422005BDBA7 /* CerraduraServerDaemon.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -412,7 +412,7 @@
 			);
 			name = CerraduraServerDaemonBundle;
 			productName = CerraduraServerDaemonBundle;
-			productReference = 6E4642D71AD96422005BDBA7 /* CerraduraServerDaemonBundle.bundle */;
+			productReference = 6E4642D71AD96422005BDBA7 /* CerraduraServerDaemon.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -766,8 +766,8 @@
 				);
 				INFOPLIST_FILE = CerraduraServerDaemonBundle/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/$(PRODUCT_NAME).bundle/Contents/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = CerraduraServerDaemon;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -780,8 +780,8 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = CerraduraServerDaemonBundle/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = CerraduraServerDaemon;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
 			};
