@@ -160,6 +160,13 @@
 			remoteGlobalIDString = 6E4642AF1AD9561A005BDBA7;
 			remoteInfo = CoreCerraduraServerTests;
 		};
+		6EEA1CA01AFE58C40000C961 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6E4644131ADAE523005BDBA7 /* CoreCerraduraServer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E4642A31AD9561A005BDBA7;
+			remoteInfo = CoreCerraduraServer;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -381,6 +388,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6EEA1CA11AFE58C40000C961 /* PBXTargetDependency */,
 			);
 			name = CerraduraServerDaemon;
 			productName = CerraduraServerDaemon;
@@ -646,6 +654,11 @@
 			target = 6E46428F1AD95552005BDBA7 /* CerraduraServerDaemon */;
 			targetProxy = 6E4642DE1AD9647C005BDBA7 /* PBXContainerItemProxy */;
 		};
+		6EEA1CA11AFE58C40000C961 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CoreCerraduraServer;
+			targetProxy = 6EEA1CA01AFE58C40000C961 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -729,6 +742,7 @@
 		6E4642981AD95552005BDBA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/$(PRODUCT_NAME).bundle/Contents/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -736,6 +750,7 @@
 		6E4642991AD95552005BDBA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
