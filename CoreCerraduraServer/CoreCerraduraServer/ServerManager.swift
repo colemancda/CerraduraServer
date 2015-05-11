@@ -70,7 +70,7 @@ import ExSwift
     @objc public func start() -> NSError? {
         
         // make sure we have the app support folder
-        // self.createApplicationSupportFolderIfNotPresent()
+        self.createApplicationSupportFolderIfNotPresent()
         
         // setup for empty server
         // self.addAdminUserIfEmpty()
@@ -96,6 +96,24 @@ import ExSwift
             
             
         })
+    }
+    
+    private func createApplicationSupportFolderIfNotPresent() {
+        
+        let fileExists = NSFileManager.defaultManager().fileExistsAtPath(ServerApplicationSupportFolderURL.path!, isDirectory: nil)
+        
+        if !fileExists {
+            
+            var error: NSError?
+            
+            // create directory
+            NSFileManager.defaultManager().createDirectoryAtURL(ServerApplicationSupportFolderURL, withIntermediateDirectories: true, attributes: nil, error: &error)
+            
+            if error != nil {
+                
+                NSException(name: NSInternalInconsistencyException, reason: "Could not create application support directory. (\(error!.localizedDescription))", userInfo: nil).raise()
+            }
+        }
     }
     
     // MARK: - ServerDataSource

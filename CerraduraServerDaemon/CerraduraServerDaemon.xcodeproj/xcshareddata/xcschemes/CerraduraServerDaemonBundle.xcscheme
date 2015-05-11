@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6E4642D61AD96422005BDBA7"
-               BuildableName = "CerraduraServerDaemonBundle.bundle"
+               BuildableName = "CerraduraServerDaemon.bundle"
                BlueprintName = "CerraduraServerDaemonBundle"
                ReferencedContainer = "container:CerraduraServerDaemon.xcodeproj">
             </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E4642D61AD96422005BDBA7"
-            BuildableName = "CerraduraServerDaemonBundle.bundle"
+            BuildableName = "CerraduraServerDaemon.bundle"
             BlueprintName = "CerraduraServerDaemonBundle"
             ReferencedContainer = "container:CerraduraServerDaemon.xcodeproj">
          </BuildableReference>
