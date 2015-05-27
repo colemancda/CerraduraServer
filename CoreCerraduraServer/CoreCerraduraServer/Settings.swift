@@ -13,10 +13,9 @@ import Foundation
 public enum Setting: String {
     
     case ServerPort = "ServerPort"
-    case SessionTokenLength = "SessionTokenLength"
-    case SessionExpiryTimeInterval = "SessionExpiryTimeInterval"
     case AnyUserAddLocks = "AnyUserAddLocks"
     case AuthorizationHeaderTimeout = "AuthorizationHeaderTimeout"
+    case UnlockCommandDuration = "UnlockCommandDuration"
 }
 
 // MARK: - Functions

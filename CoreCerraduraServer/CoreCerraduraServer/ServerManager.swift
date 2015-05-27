@@ -93,6 +93,45 @@ import ExSwift
         
         server.httpServer.get("/lock", withBlock: { (request: RouteRequest!, response: RouteResponse!) -> Void in
             
+            // parse authentication header
+            
+            let dateHeader = request.header(RequestHeader.Date.rawValue)
+            
+            let authorizationHeader = request.header(RequestHeader.Authorization.rawValue)
+            
+            if dateHeader == nil || authorizationHeader == nil {
+                
+                response.statusCode = ServerStatusCode.Unauthorized.rawValue
+                
+                return
+            }
+            
+            let authenticationContext = AuthenticationContext(verb: request.method(), path: request.url().path!, dateString: dateHeader)
+            
+            let managedObjectContext = self.persistenceManager.newManagedObjectContext()
+            
+            let lock = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext) as? Lock
+            
+            if lock == nil {
+                
+                response.statusCode = ServerStatusCode.Unauthorized.rawValue
+                
+                return
+            }
+            
+            // locks must send version with each request
+            
+            let firmwareVersion = request.header(LockRequestHeader.FirmwareVersion.rawValue)
+            
+            let softwareVersion = request.header(LockRequestHeader.SoftwareVersion.rawValue)
+            
+            if firmwareVersion == nil || softwareVersion == nil {
+                
+                response.statusCode = ServerStatusCode.BadRequest.rawValue
+                
+                return
+            }
+            
             
             
         })
@@ -229,9 +268,9 @@ import ExSwift
         
         let authenticatedUser: User?
         
-        if let authorizationHeader = httpRequest.header("Authorization") {
+        if let authorizationHeader = httpRequest.header(RequestHeader.Authorization.rawValue) {
             
-            let dateHeader = httpRequest.header("Date")
+            let dateHeader = httpRequest.header(RequestHeader.Date.rawValue)
             
             if dateHeader == nil {
                 
