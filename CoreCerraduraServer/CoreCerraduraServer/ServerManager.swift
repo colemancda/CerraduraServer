@@ -114,6 +114,13 @@ import ExSwift
             
             let (error, lock) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext) as! (NSError?, Lock?)
             
+            if error != nil {
+                
+                response.statusCode = ServerStatusCode.InternalServerError.rawValue
+                
+                return
+            }
+            
             if lock == nil {
                 
                 response.statusCode = ServerStatusCode.Unauthorized.rawValue
