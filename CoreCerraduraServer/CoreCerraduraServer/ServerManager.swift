@@ -51,6 +51,8 @@ import ExSwift
     
     public let serverPort: UInt = LoadSetting(Setting.ServerPort) as? UInt ?? 8080
     
+    public let unlockCommandDuration: NSTimeInterval = LoadSetting(Setting.UnlockCommandDuration) as? NSTimeInterval ?? 5
+    
     // MARK: - Initialization
     
     public class var sharedManager : ServerManager {
@@ -132,55 +134,74 @@ import ExSwift
                 return
             }
             
-            // get pending lock commands...
+            // get last unlock action...
             
-            var lockResponse: LockResponse!
+            var shouldUnlock: Bool = false
             
-            var fetchLockCommandsError: NSError?
+            var unlockError: NSError?
             
             managedObjectContext.performBlockAndWait({ () -> Void in
                 
-                // no commands
-                if lock!.pendingCommands?.count == 0 || lock!.pendingCommands == nil {
-                    
-                    lockResponse = LockResponse(update: false, unlock: false)
+                let fetchRequest = NSFetchRequest(entityName: "Action")
+                
+                fetchRequest.predicate = NSPredicate(format: "lock == %@ && type == unlocked && status == pending", argumentArray: [lock!])
+                
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+                
+                let unlockActions = managedObjectContext.executeFetchRequest(fetchRequest, error: &unlockError)?.first as? [Action]
+                
+                if unlockError == nil {
                     
                     return
                 }
                 
-                for lockCommand in lock!.pendingCommands! {
+                
+                for action in unlockActions! {
                     
-                    // command expired
-                    if NSDate() > NSDate(timeInterval: self.lockCommandDuration, sinceDate: lockCommand.date) {
+                    // expired
+                    if NSDate() > NSDate(timeInterval: self.unlockCommandDuration, sinceDate: action.date) {
                         
-                        // will be deleted
-                        
-                        continue
+                        action.status = ActionStatus.Expired.rawValue
                     }
                     
-                    
-                    
-                    // delete command
-                    managedObjectContext.deleteObject(lockCommand)
+                    // mark as completed
+                    else {
+                        
+                        if shouldUnlock == false {
+                            
+                            shouldUnlock = true
+                        }
+                        
+                        action.status = ActionStatus.Completed.rawValue
+                    }
                 }
                 
+                // save
+                managedObjectContext.save(&unlockError)
                 
-                
+                return
             })
             
-            if fetchLockCommandsError != nil {
+            if unlockError != nil {
                 
                 response.statusCode = ServerStatusCode.InternalServerError.rawValue
                 
                 return
             }
             
+            var shouldUpdate: Bool = false
+            
+            // TODO: Handle Updating Lock
+            
+            
+            
+            let lockResponse = LockResponse(update: shouldUpdate, unlock: shouldUnlock)
+            
             // send JSON response
             
             let jsonData = NSJSONSerialization.dataWithJSONObject(lockResponse.toJSON(), options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
             
-            
-            
+            response.respondWithData(jsonData)
         })
     }
     
@@ -240,7 +261,7 @@ import ExSwift
     }
     
     public func server(server: Server, performFunction functionName: String, forManagedObject managedObject: NSManagedObject,
-        context: NSManagedObjectContext, recievedJsonObject: [String: AnyObject]?, request: ServerRequest) -> (ServerFunctionCode, [String: AnyObject]?) {
+        context: NSManagedObjectContext, recievedJsonObject: [String: AnyObject]?, request: ServerRequest, inout userInfo: [String: AnyObject]) -> (ServerFunctionCode, [String: AnyObject]?) {
             
             switch functionName {
                 
@@ -274,22 +295,71 @@ import ExSwift
                 
                 let lock = managedObject as! Lock
                 
-                // create new pending command
+                let authenticatedUser = userInfo[ServerUserInfoKey.AuthenticatedUser.rawValue] as! User
                 
-                var saveError: NSError?
+                // create new pending action...
+                
+                var error: NSError?
+                
+                var permission: Permission?
                 
                 context.performBlockAndWait({ () -> Void in
                     
-                    let lockCommand = NSEntityDescription.insertNewObjectForEntityForName("LockCommand", inManagedObjectContext: context) as! LockCommand
+                    // fetch permssion
                     
-                    lockCommand.command = LockCommandType.Unlock.rawValue
+                    permission = {
+                       
+                        let fetchRequest = NSFetchRequest(entityName: "Permission")
+                        
+                        fetchRequest.predicate = NSPredicate(format: "user == %@ && lock == %@", argumentArray: [authenticatedUser, lock])
+                        
+                        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created", ascending: true)]
+                        
+                        fetchRequest.fetchLimit = 1
+                        
+                        // TODO: Verify permission
+                        
+                        return context.executeFetchRequest(fetchRequest, error: &error)?.first as? Permission
+                    }()
                     
-                    lockCommand.lock = lock
+                    if error != nil {
+                        
+                        return
+                    }
                     
-                    context.save(&saveError)
+                    return
                 })
                 
-                if saveError != nil {
+                if error != nil {
+                    
+                    return (.InternalErrorPerformingFunction, nil)
+                }
+                
+                if permission == nil {
+                    
+                    return (.CannotPerformFunction, nil)
+                }
+                
+                // create new action
+                
+                context.performBlockAndWait({ () -> Void in
+                    
+                    let unlockAction = NSEntityDescription.insertNewObjectForEntityForName("Action", inManagedObjectContext: context) as! Action
+                    
+                    unlockAction.type = ActionType.Unlock.rawValue
+                    
+                    unlockAction.status = ActionStatus.Pending.rawValue
+                    
+                    unlockAction.lock = lock
+                    
+                    unlockAction.user = authenticatedUser
+                    
+                    unlockAction.permission = permission!
+                    
+                    context.save(&error)
+                })
+                
+                if error != nil {
                     
                     return (.InternalErrorPerformingFunction, nil)
                 }

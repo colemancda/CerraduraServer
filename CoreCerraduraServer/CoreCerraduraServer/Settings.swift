@@ -15,7 +15,7 @@ public enum Setting: String {
     case ServerPort = "ServerPort"
     case AnyUserAddLocks = "AnyUserAddLocks"
     case AuthorizationHeaderTimeout = "AuthorizationHeaderTimeout"
-    
+    case UnlockCommandDuration = "UnlockCommandDuration"
 }
 
 // MARK: - Functions

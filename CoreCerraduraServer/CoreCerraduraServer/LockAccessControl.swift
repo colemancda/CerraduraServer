@@ -15,6 +15,12 @@ extension Lock: AccessControl {
     
     static func permissionForRequest(request: ServerRequest, authenticatedUser: User?, managedObject: NSManagedObject?, key: String?, context: NSManagedObjectContext?) -> ServerPermission {
         
+        // unlock function
+        if request.functionName == UnlockFunctionName {
+            
+            
+        }
+        
         return ServerPermission.EditPermission
     }
     
