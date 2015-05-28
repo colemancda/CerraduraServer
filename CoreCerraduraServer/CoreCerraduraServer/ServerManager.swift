@@ -110,7 +110,7 @@ import ExSwift
             
             let managedObjectContext = self.persistenceManager.newManagedObjectContext()
             
-            let lock = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext) as? Lock
+            let (error, lock) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext) as! (NSError?, Lock?)
             
             if lock == nil {
                 
@@ -131,6 +131,53 @@ import ExSwift
                 
                 return
             }
+            
+            // get pending lock commands...
+            
+            var lockResponse: LockResponse!
+            
+            var fetchLockCommandsError: NSError?
+            
+            managedObjectContext.performBlockAndWait({ () -> Void in
+                
+                // no commands
+                if lock!.pendingCommands?.count == 0 || lock!.pendingCommands == nil {
+                    
+                    lockResponse = LockResponse(update: false, unlock: false)
+                    
+                    return
+                }
+                
+                for lockCommand in lock!.pendingCommands! {
+                    
+                    // command expired
+                    if NSDate() > NSDate(timeInterval: self.lockCommandDuration, sinceDate: lockCommand.date) {
+                        
+                        // will be deleted
+                        
+                        continue
+                    }
+                    
+                    
+                    
+                    // delete command
+                    managedObjectContext.deleteObject(lockCommand)
+                }
+                
+                
+                
+            })
+            
+            if fetchLockCommandsError != nil {
+                
+                response.statusCode = ServerStatusCode.InternalServerError.rawValue
+                
+                return
+            }
+            
+            // send JSON response
+            
+            let jsonData = NSJSONSerialization.dataWithJSONObject(lockResponse.toJSON(), options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
             
             
             
@@ -266,8 +313,6 @@ import ExSwift
         
         let httpRequest = request.underlyingRequest as! RouteRequest
         
-        let authenticatedUser: User?
-        
         if let authorizationHeader = httpRequest.header(RequestHeader.Authorization.rawValue) {
             
             let dateHeader = httpRequest.header(RequestHeader.Date.rawValue)
@@ -281,15 +326,20 @@ import ExSwift
             
             // get authenticated user...
             
-            authenticatedUser = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext, managedObjectContext: context) as? User
+            let (error, user) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext, managedObjectContext: context) as! (NSError?, User?)
             
-            if authenticatedUser == nil {
+            if error != nil {
+                
+                return ServerStatusCode.InternalServerError
+            }
+            
+            if user == nil {
                 
                 return ServerStatusCode.Unauthorized
             }
-            
+                        
             // set authenticated user in user info
-            userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] = authenticatedUser!
+            userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] = user!
         }
         
         return ServerStatusCode.OK

@@ -17,7 +17,7 @@ public final class AuthenticationManager {
     // MARK: - Properties
     
     /** The amount of time (in seconds) the recieved authorization headers are valid. */
-    public let authorizationHeaderTimeout: NSTimeInterval = 90
+    public let authorizationHeaderTimeout: NSTimeInterval = LoadSetting(Setting.ServerPort) as? NSTimeInterval ?? 30
     
     // MARK: - Private Properties
     
@@ -40,7 +40,7 @@ public final class AuthenticationManager {
     /// :param: entityName Name of the entity authenticating.
     /// :param: authenticationContext The context of the authentication.
     /// :param: managedObjectContext The managed object context used to fetch the authenticating entity.
-    public func authenticateWithHeader(header: String, identifierKey: String, secretKey: String, entityName: String, authenticationContext: AuthenticationContext, managedObjectContext: NSManagedObjectContext) -> NSManagedObject? {
+    public func authenticateWithHeader(header: String, identifierKey: String, secretKey: String, entityName: String, authenticationContext: AuthenticationContext, managedObjectContext: NSManagedObjectContext) -> (NSError?, NSManagedObject?) {
         
         // get identifier...
         
@@ -50,7 +50,7 @@ public final class AuthenticationManager {
         
         if headerJSONObject == nil || headerJSONObject?.count != 1 {
             
-            return nil
+            return (nil, nil)
         }
         
         let identifier = headerJSONObject!.keys.first!
@@ -63,59 +63,56 @@ public final class AuthenticationManager {
         
         if date == nil {
             
-            return nil
+            return (nil, nil)
         }
         
         // date cannot be newer than current date
         
         if date! > NSDate() {
             
-            return nil
+            return (nil, nil)
         }
         
         // token expired
         
         if NSDate(timeInterval: self.authorizationHeaderTimeout, sinceDate: date!) < NSDate()  {
             
-            return nil
+            return (nil, nil)
         }
         
         // get user
         
-        let authenticatingEntity: NSManagedObject? = {
+        let fetchRequest = NSFetchRequest(entityName: entityName)
+        
+        fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: identifierKey),
+            rightExpression: NSExpression(forConstantValue: identifier),
+            modifier: NSComparisonPredicateModifier.DirectPredicateModifier,
+            type: NSPredicateOperatorType.EqualToPredicateOperatorType,
+            options: NSComparisonPredicateOptions.CaseInsensitivePredicateOption)
+        
+        fetchRequest.fetchLimit = 1
+        
+        var error: NSError?
+        
+        var result: [NSManagedObject]?
+        
+        managedObjectContext.performBlockAndWait({ () -> Void in
             
-            let fetchRequest = NSFetchRequest(entityName: entityName)
+            result = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [NSManagedObject]
             
-            fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: identifierKey),
-                rightExpression: NSExpression(forConstantValue: identifier),
-                modifier: NSComparisonPredicateModifier.DirectPredicateModifier,
-                type: NSPredicateOperatorType.EqualToPredicateOperatorType,
-                options: NSComparisonPredicateOptions.CaseInsensitivePredicateOption)
+            return
+        })
+        
+        if error != nil {
             
-            fetchRequest.fetchLimit = 1
-            
-            var error: NSError?
-            
-            var result: [NSManagedObject]?
-            
-            managedObjectContext.performBlockAndWait({ () -> Void in
-                
-                result = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [NSManagedObject]
-                
-                return
-            })
-            
-            if error != nil {
-                
-                return nil
-            }
-            
-            return result!.first
-        }()
+            return (error!, nil)
+        }
+        
+        let authenticatingEntity: NSManagedObject? = result!.first
         
         if authenticatingEntity == nil {
             
-            return nil
+            return (nil, nil)
         }
         
         let secret: String = {
@@ -136,9 +133,9 @@ public final class AuthenticationManager {
         
         if serverSignature != signature {
             
-            return nil
+            return (nil, nil)
         }
         
-        return authenticatingEntity!
+        return (nil, authenticatingEntity!)
     }
 }
