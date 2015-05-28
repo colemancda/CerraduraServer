@@ -130,18 +130,38 @@ import ExSwift
             
             // locks must send version with each request
             
-            let firmwareVersion = request.header(LockRequestHeader.FirmwareVersion.rawValue)
+            let firmwareBuild = request.header(LockRequestHeader.FirmwareBuild.rawValue).toUInt()
             
             let softwareVersion = request.header(LockRequestHeader.SoftwareVersion.rawValue)
             
-            if firmwareVersion == nil || softwareVersion == nil {
+            if firmwareBuild == nil || softwareVersion == nil {
                 
                 response.statusCode = ServerStatusCode.BadRequest.rawValue
                 
                 return
             }
             
-            // get last unlock action...
+            // save lock version
+            
+            var saveLockVersionError: NSError?
+            
+            managedObjectContext.performBlockAndWait({ () -> Void in
+                
+                lock!.version = softwareVersion
+                
+                lock!.firmwareBuild = firmwareBuild
+                
+                managedObjectContext.save(&saveLockVersionError)
+            })
+            
+            if saveLockVersionError != nil {
+                
+                response.statusCode = ServerStatusCode.InternalServerError.rawValue
+                
+                return
+            }
+            
+            // get pending unlock actions...
             
             var shouldUnlock: Bool = false
             
@@ -151,17 +171,16 @@ import ExSwift
                 
                 let fetchRequest = NSFetchRequest(entityName: "Action")
                 
-                fetchRequest.predicate = NSPredicate(format: "lock == %@ && type == unlocked && status == pending", argumentArray: [lock!])
+                fetchRequest.predicate = NSPredicate(format: "lock == %@ && type == unlock && status == pending", argumentArray: [lock!])
                 
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
                 
                 let unlockActions = managedObjectContext.executeFetchRequest(fetchRequest, error: &unlockError)?.first as? [Action]
                 
-                if unlockError == nil {
+                if unlockError != nil {
                     
                     return
                 }
-                
                 
                 for action in unlockActions! {
                     

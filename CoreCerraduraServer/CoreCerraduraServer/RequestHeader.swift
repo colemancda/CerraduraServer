@@ -18,6 +18,6 @@ public enum RequestHeader: String {
 /** HTTP Headers used with requests from lock devices. */
 public enum LockRequestHeader: String {
     
-    case FirmwareVersion = "x-cerradura-firmware"
+    case FirmwareBuild = "x-cerradura-firmware"
     case SoftwareVersion = "x-cerradura-version"
 }
