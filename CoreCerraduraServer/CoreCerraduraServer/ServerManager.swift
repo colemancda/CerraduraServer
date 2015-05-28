@@ -112,7 +112,7 @@ import ExSwift
             
             let managedObjectContext = self.persistenceManager.newManagedObjectContext()
             
-            let (error, lock) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext) as! (NSError?, Lock?)
+            let (error, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext)
             
             if error != nil {
                 
@@ -121,12 +121,14 @@ import ExSwift
                 return
             }
             
-            if lock == nil {
+            if managedObject == nil {
                 
                 response.statusCode = ServerStatusCode.Unauthorized.rawValue
                 
                 return
             }
+            
+            let lock = managedObject as! Lock
             
             // locks must send version with each request
             
@@ -147,9 +149,9 @@ import ExSwift
             
             managedObjectContext.performBlockAndWait({ () -> Void in
                 
-                lock!.version = softwareVersion
+                lock.version = softwareVersion
                 
-                lock!.firmwareBuild = firmwareBuild
+                lock.firmwareBuild = firmwareBuild
                 
                 managedObjectContext.save(&saveLockVersionError)
             })
@@ -171,7 +173,7 @@ import ExSwift
                 
                 let fetchRequest = NSFetchRequest(entityName: "Action")
                 
-                fetchRequest.predicate = NSPredicate(format: "lock == %@ && type == unlock && status == pending", argumentArray: [lock!])
+                fetchRequest.predicate = NSPredicate(format: "lock == %@ && type == unlock && status == pending", argumentArray: [lock])
                 
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
                 
@@ -422,20 +424,20 @@ import ExSwift
             
             // get authenticated user...
             
-            let (error, user) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext, managedObjectContext: context) as! (NSError?, User?)
+            let (error, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext, managedObjectContext: context)
             
             if error != nil {
                 
                 return ServerStatusCode.InternalServerError
             }
             
-            if user == nil {
+            if managedObject == nil {
                 
                 return ServerStatusCode.Unauthorized
             }
                         
             // set authenticated user in user info
-            userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] = user!
+            userInfo[CoreCerraduraServer.ServerUserInfoKey.AuthenticatedUser.rawValue] = managedObject
         }
         
         return ServerStatusCode.OK
