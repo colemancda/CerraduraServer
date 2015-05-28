@@ -32,7 +32,7 @@ public final class AuthenticationManager {
     
     // MARK: - Methods
     
-    /// Verifies the authorization header as valid and derives the authenticated entity.
+    /// Verifies the authorization header as valid and derives the authenticated entity. Does not allow archived entities to authenticate.
     ///
     /// :param: authorizationHeader The token used for authorization.
     /// :param: identifierKey The key of the identifier for the authenticating entity.
@@ -113,6 +113,24 @@ public final class AuthenticationManager {
         if authenticatingEntity == nil {
             
             return (nil, nil)
+        }
+        
+        // check if entity is archived
+        if let archivable = authenticatingEntity as? Archivable {
+            
+            var archived: Bool!
+            
+            managedObjectContext.performBlockAndWait({ () -> Void in
+                
+                archived = archivable.archived.boolValue
+                
+                return
+            })
+            
+            if archived == true {
+                
+                return (nil, nil)
+            }
         }
         
         let secret: String = {
