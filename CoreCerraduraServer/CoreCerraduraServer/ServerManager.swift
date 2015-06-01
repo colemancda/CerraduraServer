@@ -75,7 +75,7 @@ import ExSwift
         self.createApplicationSupportFolderIfNotPresent()
         
         // setup for empty server
-        // self.addAdminUserIfEmpty()
+        self.addAdminUserIfEmpty()
         
         // start HTTP server
         return self.server.start(onPort: self.serverPort);
@@ -249,6 +249,51 @@ import ExSwift
                 NSException(name: NSInternalInconsistencyException, reason: "Could not create application support directory. (\(error!.localizedDescription))", userInfo: nil).raise()
             }
         }
+    }
+    
+    private func addAdminUserIfEmpty() {
+        
+        // search for admin user
+        
+        let context = self.persistenceManager.newManagedObjectContext()
+        
+        var error: NSError?
+        
+        let adminUser: User? = {
+           
+            let fetchRequest = NSFetchRequest(entityName: "User")
+            
+            fetchRequest.predicate = NSPredicate(format: "username == admin", argumentArray: nil)
+            
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+            
+            fetchRequest.fetchLimit = 1
+            
+            var results: [User]?
+            
+            context.performBlockAndWait({ () -> Void in
+                
+                results = context.executeFetchRequest(fetchRequest, error: &error) as? [User]
+                
+                return
+            })
+            
+            return results?.first
+        }()
+        
+        if error != nil {
+            
+            NSException(name: NSInternalInconsistencyException, reason: "Could not create fetch user \(error)", userInfo: nil).raise()
+            
+            return
+        }
+        
+        // create admin user
+        if adminUser == nil {
+            
+            
+        }
+        
     }
     
     // MARK: - ServerDataSource
