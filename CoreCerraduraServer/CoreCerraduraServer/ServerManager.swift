@@ -241,13 +241,15 @@ import ExSwift
         
         let context = self.persistenceManager.newManagedObjectContext()
         
+        let adminUsername = "administrator"
+        
         var error: NSError?
         
         let adminUser: User? = {
            
             let fetchRequest = NSFetchRequest(entityName: "User")
             
-            fetchRequest.predicate = NSPredicate(format: "username == admin", argumentArray: nil)
+            fetchRequest.predicate = NSPredicate(format: "username ==[c] %@", argumentArray: [adminUsername])
             
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
             
@@ -267,7 +269,7 @@ import ExSwift
         
         if error != nil {
             
-            NSException(name: NSInternalInconsistencyException, reason: "Could not create fetch user \(error)", userInfo: nil).raise()
+            NSException(name: NSInternalInconsistencyException, reason: "Could not fetch admin user \(error!)", userInfo: nil).raise()
             
             return
         }
@@ -275,7 +277,29 @@ import ExSwift
         // create admin user
         if adminUser == nil {
             
+            var saveError: NSError?
             
+            context.performBlockAndWait({ () -> Void in
+                
+                let adminUser = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: context) as! User
+                
+                adminUser.setValue(0, forKey: "id")
+                
+                adminUser.username = adminUsername
+                
+                adminUser.password = "admin1234"
+                
+                adminUser.email = "admin@server.com"
+                
+                context.save(&saveError)
+            })
+            
+            if saveError != nil {
+                
+                NSException(name: NSInternalInconsistencyException, reason: "Could not create admin user \(saveError!)", userInfo: nil).raise()
+                
+                return
+            }
         }
         
     }
