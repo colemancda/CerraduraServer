@@ -112,9 +112,9 @@ import ExSwift
             
             let managedObjectContext = self.persistenceManager.newManagedObjectContext()
             
-            let (error, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext)
+            let (authenticateError, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext)
             
-            if error != nil {
+            if authenticateError != nil {
                 
                 response.statusCode = ServerStatusCode.InternalServerError.rawValue
                 
@@ -143,31 +143,11 @@ import ExSwift
                 return
             }
             
-            // save lock version
-            
-            var saveLockVersionError: NSError?
-            
-            managedObjectContext.performBlockAndWait({ () -> Void in
-                
-                lock.version = softwareVersion
-                
-                lock.firmwareBuild = firmwareBuild
-                
-                managedObjectContext.save(&saveLockVersionError)
-            })
-            
-            if saveLockVersionError != nil {
-                
-                response.statusCode = ServerStatusCode.InternalServerError.rawValue
-                
-                return
-            }
-            
             // get pending unlock actions...
             
             var shouldUnlock: Bool = false
             
-            var unlockError: NSError?
+            var error: NSError?
             
             managedObjectContext.performBlockAndWait({ () -> Void in
                 
@@ -177,9 +157,9 @@ import ExSwift
                 
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
                 
-                let unlockActions = managedObjectContext.executeFetchRequest(fetchRequest, error: &unlockError)?.first as? [Action]
+                let unlockActions = managedObjectContext.executeFetchRequest(fetchRequest, error: &error)?.first as? [Action]
                 
-                if unlockError != nil {
+                if error != nil {
                     
                     return
                 }
@@ -204,13 +184,19 @@ import ExSwift
                     }
                 }
                 
+                // update lock version
+                
+                lock.version = softwareVersion
+                
+                lock.firmwareBuild = firmwareBuild!
+                
                 // save
-                managedObjectContext.save(&unlockError)
+                managedObjectContext.save(&error)
                 
                 return
             })
             
-            if unlockError != nil {
+            if error != nil {
                 
                 response.statusCode = ServerStatusCode.InternalServerError.rawValue
                 
