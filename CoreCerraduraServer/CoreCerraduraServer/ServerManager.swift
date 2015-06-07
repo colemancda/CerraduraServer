@@ -49,9 +49,7 @@ import ExSwift
     
     public lazy var authenticationManager: AuthenticationManager = AuthenticationManager()
     
-    public let serverPort: UInt = LoadSetting(Setting.ServerPort) as? UInt ?? 8080
-    
-    public let unlockCommandDuration: NSTimeInterval = LoadSetting(Setting.UnlockCommandDuration) as? NSTimeInterval ?? 5
+    public let serverPort: UInt = Setting.ServerPort.staticValue
     
     // MARK: - Initialization
     
@@ -167,7 +165,7 @@ import ExSwift
                 for action in unlockActions! {
                     
                     // expired
-                    if NSDate() > NSDate(timeInterval: self.unlockCommandDuration, sinceDate: action.date) {
+                    if NSDate() > NSDate(timeInterval: Setting.UnlockCommandDuration.staticValue, sinceDate: action.date) {
                         
                         action.status = ActionStatus.Expired.rawValue
                     }

@@ -8,42 +8,70 @@
 
 import Foundation
 
-// MARK: - Enumerations
+// MARK: - Structs
 
-public enum Setting: String {
+/** Settings for Cerradura Server. */
+public struct Setting {
     
-    case ServerPort = "ServerPort"
-    case AnyUserAddLocks = "AnyUserAddLocks"
-    case AuthorizationHeaderTimeout = "AuthorizationHeaderTimeout"
-    case UnlockCommandDuration = "UnlockCommandDuration"
+    public static let ServerPort = SettingInfo<UInt>(key: "ServerPort", defaultValue: 8080)
+    
+    public static let AnyUserAddLocks = SettingInfo<Bool>(key: "AnyUserAddLocks", defaultValue: false)
+    
+    public static let AuthorizationHeaderTimeout = SettingInfo<NSTimeInterval>(key: "AuthorizationHeaderTimeout", defaultValue: 30)
+    
+    public static let UnlockCommandDuration = SettingInfo<NSTimeInterval>(key: "UnlockCommandDuration", defaultValue: 5)
 }
 
-// MARK: - Functions
-
-/** Load the saved Server setting value from disk. */
-public func LoadSetting(serverSetting: Setting) -> AnyObject? {
+public class SettingInfo<T> {
     
-    // try to load archived settings
-    let archivedServerSettings = NSDictionary(contentsOfURL: ServerSettingsFileURL) as? [String: AnyObject]
+    public let key: String
     
-    return archivedServerSettings?[serverSetting.rawValue]
-}
-
-/** Saves the specified setting to disk. */
-public func SaveSetting(serverSetting: Setting, value: AnyObject) -> Bool {
+    public let defaultValue: T
     
-    // try to load archived settings
-    var currentSettings = NSDictionary(contentsOfURL: ServerSettingsFileURL) as? [String: AnyObject]
-    
-    // new settings
-    if currentSettings == nil {
+    /** Fetches the value from disk, or returns the default value. The setter saves the value to disk. */
+    public var value: T {
         
-        currentSettings = [String: AnyObject]()
+        get {
+            
+            // try to load archived settings
+            let archivedServerSettings = NSDictionary(contentsOfURL: ServerSettingsFileURL) as? [String: AnyObject]
+            
+            return archivedServerSettings?[self.key] as? T ?? self.defaultValue
+        }
+        
+        set {
+            
+            // try to load archived settings
+            var currentSettings = NSDictionary(contentsOfURL: ServerSettingsFileURL) as? [String: AnyObject]
+            
+            // new settings
+            if currentSettings == nil {
+                
+                currentSettings = [String: AnyObject]()
+            }
+            
+            // set new setting value
+            currentSettings![self.key] = value as? AnyObject
+            
+            // try to save
+            if !NSDictionary(dictionary: currentSettings!).writeToURL(ServerSettingsFileURL, atomically: true) {
+                
+                fatalError("Could not save value \(value) for \(self.key) setting")
+            }
+        }
     }
     
-    // set new setting value
-    currentSettings![serverSetting.rawValue] = value
+    /** Lazily loads the setting once per application lifetime. */
+    public lazy var staticValue: T = {
+        
+        return self.value
+    }()
     
-    // try to save
-    return NSDictionary(dictionary: currentSettings!).writeToURL(ServerSettingsFileURL, atomically: true)
+    // MARK: - Initalization
+    
+    public init(key: String, defaultValue: T) {
+        
+        self.key = key
+        self.defaultValue = defaultValue
+    }
 }

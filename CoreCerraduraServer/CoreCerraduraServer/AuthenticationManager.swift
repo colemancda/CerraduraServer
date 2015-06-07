@@ -16,8 +16,7 @@ public final class AuthenticationManager {
     
     // MARK: - Properties
     
-    /** The amount of time (in seconds) the recieved authorization headers are valid. */
-    public let authorizationHeaderTimeout: NSTimeInterval = LoadSetting(Setting.ServerPort) as? NSTimeInterval ?? 30
+    public let authorizationHeaderTimeout = Setting.AuthorizationHeaderTimeout.staticValue
     
     // MARK: - Private Properties
     
