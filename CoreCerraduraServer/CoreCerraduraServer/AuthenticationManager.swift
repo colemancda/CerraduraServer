@@ -148,7 +148,7 @@ public final class AuthenticationManager {
         
         let serverSignature = GenerateAuthenticationToken(identifier, secret, authenticationContext)
         
-        if serverSignature != signature {
+        if serverSignature != header {
             
             return (nil, nil)
         }
