@@ -73,7 +73,12 @@ import ExSwift
         self.createApplicationSupportFolderIfNotPresent()
         
         // setup for empty server
-        self.addAdminUserIfEmpty()
+        self.addAdminUser()
+        
+        // add simulator lock for debug builds
+        #if DEBUG
+        self.addSimulatorLock()
+        #endif
         
         // start HTTP server
         return self.server.start(onPort: self.serverPort);
@@ -235,7 +240,7 @@ import ExSwift
         }
     }
     
-    private func addAdminUserIfEmpty() {
+    private func addAdminUser() -> User {
         
         // search for admin user
         
@@ -245,7 +250,7 @@ import ExSwift
         
         var error: NSError?
         
-        let adminUser: User? = {
+        var adminUser: User? = {
            
             let fetchRequest = NSFetchRequest(entityName: "User")
             
@@ -271,7 +276,7 @@ import ExSwift
             
             NSException(name: NSInternalInconsistencyException, reason: "Could not fetch admin user \(error!)", userInfo: nil).raise()
             
-            return
+            return adminUser!
         }
         
         // create admin user
@@ -281,27 +286,122 @@ import ExSwift
             
             context.performBlockAndWait({ () -> Void in
                 
-                let adminUser = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: context) as! User
+                let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: context) as! User
                 
-                adminUser.setValue(0, forKey: "id")
+                user.setValue(self.persistenceManager.newResourceIDForEntity("User"), forKey: "id")
                 
-                adminUser.username = adminUsername
+                user.username = adminUsername
                 
-                adminUser.password = "admin1234"
+                user.password = "admin1234"
                 
-                adminUser.email = "admin@server.com"
+                user.email = "admin@server.com"
                 
                 context.save(&saveError)
+                
+                adminUser = user
             })
             
             if saveError != nil {
                 
                 NSException(name: NSInternalInconsistencyException, reason: "Could not create admin user \(saveError!)", userInfo: nil).raise()
                 
-                return
+                return adminUser!
             }
         }
         
+        return adminUser!
+        
+    }
+    
+    private func addSimulatorLock() -> Lock {
+        
+        let context = self.persistenceManager.newManagedObjectContext()
+        
+        // search for existing simulator lock
+        
+        let simulatorLockSecret = "SimulatorLockSecret1234"
+        
+        var error: NSError?
+        
+        var simulatorLock: Lock? = {
+           
+            let fetchRequest = NSFetchRequest(entityName: "Lock")
+            
+            fetchRequest.predicate = NSPredicate(format: "secret == %@", argumentArray: [simulatorLockSecret])
+            
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+            
+            fetchRequest.fetchLimit = 1
+            
+            var results: [Lock]?
+            
+            context.performBlockAndWait({ () -> Void in
+                
+                results = context.executeFetchRequest(fetchRequest, error: &error) as? [Lock]
+                
+                return
+            })
+            
+            return results?.first
+        }()
+        
+        if error != nil {
+            
+            NSException(name: NSInternalInconsistencyException, reason: "Could not simulator lock \(error!)", userInfo: nil).raise()
+            
+            return simulatorLock!
+        }
+        
+        // create simulator lock
+        if simulatorLock == nil {
+            
+            context.performBlockAndWait({ () -> Void in
+                
+                let lock = NSEntityDescription.insertNewObjectForEntityForName("Lock", inManagedObjectContext: context) as! Lock
+                
+                lock.setValue(self.persistenceManager.newResourceIDForEntity("Lock"), forKey: "id")
+                
+                lock.name = "Simulator Lock"
+                
+                lock.secret = simulatorLockSecret
+                
+                lock.model = LockModel.Simulator.rawValue
+                
+                // create permission for admin user
+                
+                let lockPermission = NSEntityDescription.insertNewObjectForEntityForName("Permission", inManagedObjectContext: context) as! Permission
+                
+                lockPermission.setValue(self.persistenceManager.newResourceIDForEntity("Permission"), forKey: "id")
+                
+                lockPermission.admin = true
+                
+                let adminUser: User = {
+                    
+                    let user = self.addAdminUser()
+                    
+                    return context.objectWithID(user.objectID) as! User
+                }()
+                
+                lockPermission.user = adminUser
+                
+                lockPermission.lock = lock
+                
+                context.save(&error)
+                
+                simulatorLock = lock
+            })
+            
+            println("Created Simulator lock")
+        }
+        
+        if error != nil {
+            
+            NSException(name: NSInternalInconsistencyException, reason: "Could not create simulator lock \(error!)", userInfo: nil).raise()
+            
+            return simulatorLock!
+        }
+        
+        return simulatorLock!
     }
     
     // MARK: - ServerDataSource
