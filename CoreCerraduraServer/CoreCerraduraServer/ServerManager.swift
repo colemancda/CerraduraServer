@@ -307,6 +307,8 @@ import ExSwift
                 
                 return adminUser!
             }
+            
+            println("Created admin user")
         }
         
         return adminUser!
