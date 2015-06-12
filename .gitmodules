@@ -1,6 +1,0 @@
-[submodule "CoreCerradura"]
-	path = CoreCerradura
-	url = git@github.com:colemancda/CoreCerradura.git
-[submodule "SNRFetchedResultsController"]
-	path = SNRFetchedResultsController
-	url = https://github.com/colemancda/SNRFetchedResultsController.git
