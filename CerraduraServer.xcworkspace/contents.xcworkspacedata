@@ -5,9 +5,6 @@
       location = "group:CoreCerradura/CoreCerradura/../../Cerradura Server/Cerradura Server.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:CerraduraServerDaemon/CerraduraServerDaemon/../../CoreCerradura/CoreCerradura/CoreCerradura.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:CoreCerraduraServer/CoreCerraduraServer.xcodeproj">
    </FileRef>
    <FileRef

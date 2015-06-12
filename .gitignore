@@ -2,3 +2,5 @@
 *.xcuserstate
 
 CerraduraServer.xcworkspace/xcuserdata/Coleman.xcuserdatad/UserInterfaceState.xcuserstate
+
+Carthage/*
