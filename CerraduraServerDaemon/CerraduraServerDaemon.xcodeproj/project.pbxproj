@@ -9,15 +9,8 @@
 /* Begin PBXBuildFile section */
 		6E4642941AD95552005BDBA7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4642931AD95552005BDBA7 /* main.m */; };
 		6E4642E11AD9649B005BDBA7 /* CerraduraServerDaemon in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6E4642901AD95552005BDBA7 /* CerraduraServerDaemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		6E95D40D1B2B3BC6000DD4DA /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D4041B2B3BC6000DD4DA /* CocoaAsyncSocket.framework */; };
-		6E95D40E1B2B3BC7000DD4DA /* CocoaHTTPServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D4051B2B3BC6000DD4DA /* CocoaHTTPServer.framework */; };
-		6E95D40F1B2B3BC7000DD4DA /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D4061B2B3BC6000DD4DA /* CocoaLumberjack.framework */; };
-		6E95D4101B2B3BC7000DD4DA /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D4071B2B3BC6000DD4DA /* CommonCrypto.framework */; };
-		6E95D4111B2B3BC7000DD4DA /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D4081B2B3BC6000DD4DA /* Crypto.framework */; };
-		6E95D4121B2B3BC7000DD4DA /* ExSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D4091B2B3BC6000DD4DA /* ExSwift.framework */; };
-		6E95D4131B2B3BC7000DD4DA /* IDZSwiftCommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D40A1B2B3BC6000DD4DA /* IDZSwiftCommonCrypto.framework */; };
-		6E95D4141B2B3BC7000DD4DA /* NetworkObjects.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D40B1B2B3BC6000DD4DA /* NetworkObjects.framework */; };
-		6E95D4151B2B3BC7000DD4DA /* RoutingHTTPServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E95D40C1B2B3BC6000DD4DA /* RoutingHTTPServer.framework */; };
+		6EEE75311B2B42620052B4F4 /* CoreCerraduraServer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEE752E1B2B42420052B4F4 /* CoreCerraduraServer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6EEE75341B2B42A40052B4F4 /* CoreCerraduraServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEE752E1B2B42420052B4F4 /* CoreCerraduraServer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,18 +21,30 @@
 			remoteGlobalIDString = 6E46428F1AD95552005BDBA7;
 			remoteInfo = CerraduraServerDaemon;
 		};
+		6EEE752D1B2B42420052B4F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6E4642A41AD9561A005BDBA7;
+			remoteInfo = CoreCerraduraServer;
+		};
+		6EEE752F1B2B42420052B4F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6E4642AF1AD9561A005BDBA7;
+			remoteInfo = CoreCerraduraServerTests;
+		};
+		6EEE75321B2B42A00052B4F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E4642A31AD9561A005BDBA7;
+			remoteInfo = CoreCerraduraServer;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E46428E1AD95552005BDBA7 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		6E4642E01AD9648D005BDBA7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -56,6 +61,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				6EEE75311B2B42620052B4F4 /* CoreCerraduraServer.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,15 +73,7 @@
 		6E4642931AD95552005BDBA7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6E4642D71AD96422005BDBA7 /* CerraduraServerDaemon.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CerraduraServerDaemon.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E4642DA1AD96422005BDBA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6E95D4041B2B3BC6000DD4DA /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = ../../CoreCerradura/Carthage/Build/Mac/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
-		6E95D4051B2B3BC6000DD4DA /* CocoaHTTPServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaHTTPServer.framework; path = ../../CoreCerradura/Carthage/Build/Mac/CocoaHTTPServer.framework; sourceTree = "<group>"; };
-		6E95D4061B2B3BC6000DD4DA /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = ../../CoreCerradura/Carthage/Build/Mac/CocoaLumberjack.framework; sourceTree = "<group>"; };
-		6E95D4071B2B3BC6000DD4DA /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = ../../CoreCerradura/Carthage/Build/Mac/CommonCrypto.framework; sourceTree = "<group>"; };
-		6E95D4081B2B3BC6000DD4DA /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = ../../CoreCerradura/Carthage/Build/Mac/Crypto.framework; sourceTree = "<group>"; };
-		6E95D4091B2B3BC6000DD4DA /* ExSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExSwift.framework; path = ../../CoreCerradura/Carthage/Build/Mac/ExSwift.framework; sourceTree = "<group>"; };
-		6E95D40A1B2B3BC6000DD4DA /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDZSwiftCommonCrypto.framework; path = ../../CoreCerradura/Carthage/Build/Mac/IDZSwiftCommonCrypto.framework; sourceTree = "<group>"; };
-		6E95D40B1B2B3BC6000DD4DA /* NetworkObjects.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkObjects.framework; path = ../../CoreCerradura/Carthage/Build/Mac/NetworkObjects.framework; sourceTree = "<group>"; };
-		6E95D40C1B2B3BC6000DD4DA /* RoutingHTTPServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RoutingHTTPServer.framework; path = ../../CoreCerradura/Carthage/Build/Mac/RoutingHTTPServer.framework; sourceTree = "<group>"; };
+		6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CoreCerraduraServer.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EEE75341B2B42A40052B4F4 /* CoreCerraduraServer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,15 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E95D4141B2B3BC7000DD4DA /* NetworkObjects.framework in Frameworks */,
-				6E95D4151B2B3BC7000DD4DA /* RoutingHTTPServer.framework in Frameworks */,
-				6E95D4101B2B3BC7000DD4DA /* CommonCrypto.framework in Frameworks */,
-				6E95D4131B2B3BC7000DD4DA /* IDZSwiftCommonCrypto.framework in Frameworks */,
-				6E95D4111B2B3BC7000DD4DA /* Crypto.framework in Frameworks */,
-				6E95D40D1B2B3BC6000DD4DA /* CocoaAsyncSocket.framework in Frameworks */,
-				6E95D4121B2B3BC7000DD4DA /* ExSwift.framework in Frameworks */,
-				6E95D40F1B2B3BC7000DD4DA /* CocoaLumberjack.framework in Frameworks */,
-				6E95D40E1B2B3BC7000DD4DA /* CocoaHTTPServer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,18 +141,19 @@
 		6E95D3FA1B2B3B7A000DD4DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6E95D4041B2B3BC6000DD4DA /* CocoaAsyncSocket.framework */,
-				6E95D4051B2B3BC6000DD4DA /* CocoaHTTPServer.framework */,
-				6E95D4061B2B3BC6000DD4DA /* CocoaLumberjack.framework */,
-				6E95D4071B2B3BC6000DD4DA /* CommonCrypto.framework */,
-				6E95D4081B2B3BC6000DD4DA /* Crypto.framework */,
-				6E95D4091B2B3BC6000DD4DA /* ExSwift.framework */,
-				6E95D40A1B2B3BC6000DD4DA /* IDZSwiftCommonCrypto.framework */,
-				6E95D40B1B2B3BC6000DD4DA /* NetworkObjects.framework */,
-				6E95D40C1B2B3BC6000DD4DA /* RoutingHTTPServer.framework */,
+				6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */,
 			);
 			name = Frameworks;
 			path = ../CoreCerraduraServer;
+			sourceTree = "<group>";
+		};
+		6EEE75291B2B42420052B4F4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6EEE752E1B2B42420052B4F4 /* CoreCerraduraServer.framework */,
+				6EEE75301B2B42420052B4F4 /* CoreCerraduraServerTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,11 +165,11 @@
 			buildPhases = (
 				6E46428C1AD95552005BDBA7 /* Sources */,
 				6E46428D1AD95552005BDBA7 /* Frameworks */,
-				6E46428E1AD95552005BDBA7 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6EEE75331B2B42A00052B4F4 /* PBXTargetDependency */,
 			);
 			name = CerraduraServerDaemon;
 			productName = CerraduraServerDaemon;
@@ -232,6 +223,12 @@
 			mainGroup = 6E4642871AD95552005BDBA7;
 			productRefGroup = 6E4642911AD95552005BDBA7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6EEE75291B2B42420052B4F4 /* Products */;
+					ProjectRef = 6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6E4642D61AD96422005BDBA7 /* CerraduraServerDaemonBundle */,
@@ -239,6 +236,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6EEE752E1B2B42420052B4F4 /* CoreCerraduraServer.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CoreCerraduraServer.framework;
+			remoteRef = 6EEE752D1B2B42420052B4F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6EEE75301B2B42420052B4F4 /* CoreCerraduraServerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CoreCerraduraServerTests.xctest;
+			remoteRef = 6EEE752F1B2B42420052B4F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6E4642D51AD96422005BDBA7 /* Resources */ = {
@@ -273,6 +287,11 @@
 			isa = PBXTargetDependency;
 			target = 6E46428F1AD95552005BDBA7 /* CerraduraServerDaemon */;
 			targetProxy = 6E4642DE1AD9647C005BDBA7 /* PBXContainerItemProxy */;
+		};
+		6EEE75331B2B42A00052B4F4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CoreCerraduraServer;
+			targetProxy = 6EEE75321B2B42A00052B4F4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -357,6 +376,10 @@
 		6E4642981AD95552005BDBA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					$SRCROOT/../Carthage/Build/Mac,
+				);
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/$(PRODUCT_NAME).bundle/Contents/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -365,6 +388,10 @@
 		6E4642991AD95552005BDBA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					$SRCROOT/../Carthage/Build/Mac,
+				);
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
