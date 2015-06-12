@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0F126B07-24CC-40F0-9DA0-B2DBF3500F5A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CerraduraServer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</key>
+		<string>https://github.com/colemancda/CerraduraServer.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CerraduraServer.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/colemancda/CerraduraServer.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BD1ED7823FC0559ECAAD028EE4335E24F6A603EB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CerraduraServer</string>
+		</dict>
+	</array>
+</dict>
+</plist>

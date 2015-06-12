@@ -67,7 +67,7 @@ public final class AuthenticationManager {
         
         // date cannot be newer than current date
         
-        if date! > NSDate() {
+        if date! < NSDate() {
             
             return (nil, nil)
         }
