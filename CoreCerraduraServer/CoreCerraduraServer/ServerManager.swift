@@ -375,7 +375,7 @@ import ExSwift
                 
                 lockPermission.setValue(self.persistenceManager.newResourceIDForEntity("Permission"), forKey: "id")
                 
-                lockPermission.admin = true
+                lockPermission.permissionType = PermissionType.Admin.rawValue
                 
                 let adminUser: User = {
                     
