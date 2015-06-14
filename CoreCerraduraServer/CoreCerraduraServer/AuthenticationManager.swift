@@ -65,13 +65,6 @@ public final class AuthenticationManager {
             return (nil, nil)
         }
         
-        // date cannot be newer than current date
-        
-        if date! < NSDate() {
-            
-            return (nil, nil)
-        }
-        
         // token expired
         
         if NSDate(timeInterval: self.authorizationHeaderTimeout, sinceDate: date!) < NSDate()  {
