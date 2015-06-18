@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6E093A641B2B4E9C00DB7C76 /* CocoaAsyncSocket.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093A5B1B2B4E5700DB7C76 /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E093A651B2B4E9C00DB7C76 /* CocoaHTTPServer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093A5C1B2B4E5700DB7C76 /* CocoaHTTPServer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6E093A661B2B4E9C00DB7C76 /* CocoaLumberjack.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093A5D1B2B4E5700DB7C76 /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E093A671B2B4E9C00DB7C76 /* CoreCerradura.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093A5F1B2B4E5700DB7C76 /* CoreCerradura.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E093A681B2B4E9C00DB7C76 /* ExSwift.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093A601B2B4E5700DB7C76 /* ExSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E093A691B2B4E9C00DB7C76 /* IDZSwiftCommonCrypto.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093A611B2B4E5700DB7C76 /* IDZSwiftCommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -71,7 +70,6 @@
 			files = (
 				6E093A641B2B4E9C00DB7C76 /* CocoaAsyncSocket.framework in Copy Frameworks */,
 				6E093A651B2B4E9C00DB7C76 /* CocoaHTTPServer.framework in Copy Frameworks */,
-				6E093A661B2B4E9C00DB7C76 /* CocoaLumberjack.framework in Copy Frameworks */,
 				6E093A671B2B4E9C00DB7C76 /* CoreCerradura.framework in Copy Frameworks */,
 				6E093A681B2B4E9C00DB7C76 /* ExSwift.framework in Copy Frameworks */,
 				6E093A691B2B4E9C00DB7C76 /* IDZSwiftCommonCrypto.framework in Copy Frameworks */,
@@ -87,7 +85,6 @@
 /* Begin PBXFileReference section */
 		6E093A5B1B2B4E5700DB7C76 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = ../Carthage/Build/Mac/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
 		6E093A5C1B2B4E5700DB7C76 /* CocoaHTTPServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaHTTPServer.framework; path = ../Carthage/Build/Mac/CocoaHTTPServer.framework; sourceTree = "<group>"; };
-		6E093A5D1B2B4E5700DB7C76 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = ../Carthage/Build/Mac/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		6E093A5E1B2B4E5700DB7C76 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = ../Carthage/Build/Mac/CommonCrypto.framework; sourceTree = "<group>"; };
 		6E093A5F1B2B4E5700DB7C76 /* CoreCerradura.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreCerradura.framework; path = ../Carthage/Build/Mac/CoreCerradura.framework; sourceTree = "<group>"; };
 		6E093A601B2B4E5700DB7C76 /* ExSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExSwift.framework; path = ../Carthage/Build/Mac/ExSwift.framework; sourceTree = "<group>"; };
@@ -169,7 +166,6 @@
 				6EEE75281B2B42420052B4F4 /* CoreCerraduraServer.xcodeproj */,
 				6E093A5B1B2B4E5700DB7C76 /* CocoaAsyncSocket.framework */,
 				6E093A5C1B2B4E5700DB7C76 /* CocoaHTTPServer.framework */,
-				6E093A5D1B2B4E5700DB7C76 /* CocoaLumberjack.framework */,
 				6E093A5E1B2B4E5700DB7C76 /* CommonCrypto.framework */,
 				6E093A5F1B2B4E5700DB7C76 /* CoreCerradura.framework */,
 				6E093A601B2B4E5700DB7C76 /* ExSwift.framework */,
