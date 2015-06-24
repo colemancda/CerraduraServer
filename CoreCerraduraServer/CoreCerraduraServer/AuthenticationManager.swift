@@ -18,17 +18,6 @@ public final class AuthenticationManager {
     
     public let authorizationHeaderTimeout = Setting.AuthorizationHeaderTimeout.staticValue
     
-    // MARK: - Private Properties
-    
-    private let httpDateFormatter: NSDateFormatter = {
-       
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.dateFormat = "EEE',' dd' 'MMM' 'yyyy HH':'mm':'ss zzz"
-        
-        return dateFormatter
-    }()
-    
     // MARK: - Methods
     
     /// Verifies the authorization header as valid and derives the authenticated entity. Does not allow archived entities to authenticate.
@@ -58,16 +47,11 @@ public final class AuthenticationManager {
         
         // get date
         
-        let date = self.httpDateFormatter.dateFromString(authenticationContext.dateString)
-        
-        if date == nil {
-            
-            return (nil, nil)
-        }
+        let date = authenticationContext.date
         
         // token expired
         
-        if NSDate(timeInterval: self.authorizationHeaderTimeout, sinceDate: date!) < NSDate()  {
+        if NSDate(timeInterval: self.authorizationHeaderTimeout, sinceDate: date) < NSDate()  {
             
             return (nil, nil)
         }

@@ -64,7 +64,7 @@ import ExSwift
         return Static.instance!
     }
     
-    // MARK: - Actions
+    // MARK: - Methods
     
     /** Starts broadcasting the server. */
     @objc public func start() -> NSError? {
@@ -90,8 +90,6 @@ import ExSwift
         self.server.stop();
     }
     
-    // MARK: - Methods
-    
     // MARK: - Private Methods
     
     private func addLockHandler(server: Server) {
@@ -111,11 +109,18 @@ import ExSwift
                 return
             }
             
-            let authenticationContext = AuthenticationContext(verb: request.method(), path: request.url().path!, dateString: dateHeader)
+            let authenticationContext = HTTPAuthenticationContext(verb: request.method(), path: request.url().path!, dateString: dateHeader)
+            
+            if authenticationContext == nil {
+                
+                response.statusCode = ServerStatusCode.Unauthorized.rawValue
+                
+                return
+            }
             
             let managedObjectContext = self.persistenceManager.newManagedObjectContext()
             
-            let (authenticateError, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext, managedObjectContext: managedObjectContext)
+            let (authenticateError, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "id", secretKey: "secret", entityName: "Lock", authenticationContext: authenticationContext!, managedObjectContext: managedObjectContext)
             
             if authenticateError != nil {
                 
@@ -575,11 +580,16 @@ import ExSwift
                 return ServerStatusCode.Unauthorized
             }
             
-            let authenticationContext = AuthenticationContext(verb: httpRequest.method(), path: httpRequest.url().path!, dateString: dateHeader)
+            let authenticationContext = HTTPAuthenticationContext(verb: httpRequest.method(), path: httpRequest.url().path!, dateString: dateHeader)
+            
+            if authenticationContext == nil {
+                
+                return ServerStatusCode.Unauthorized
+            }
             
             // get authenticated user...
             
-            let (error, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext, managedObjectContext: context)
+            let (error, managedObject) = self.authenticationManager.authenticateWithHeader(authorizationHeader, identifierKey: "username", secretKey: "password", entityName: "User", authenticationContext: authenticationContext!, managedObjectContext: context)
             
             if error != nil {
                 
