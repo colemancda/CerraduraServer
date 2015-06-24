@@ -217,11 +217,11 @@ import ExSwift
             
             
             
-            let lockResponse = LockResponse(update: shouldUpdate, unlock: shouldUnlock)
+            let lockCommand = LockCommand(shouldUpdate: shouldUpdate, shouldUnlock: shouldUnlock)
             
             // send JSON response
             
-            let jsonData = NSJSONSerialization.dataWithJSONObject(lockResponse.toJSON(), options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
+            let jsonData = NSJSONSerialization.dataWithJSONObject(lockCommand.toJSON(), options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
             
             response.respondWithData(jsonData)
         })
